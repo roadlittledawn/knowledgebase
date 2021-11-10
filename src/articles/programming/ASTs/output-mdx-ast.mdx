@@ -1,0 +1,31 @@
+This is an example file for reading an MDX file and writing its AST to a file.
+
+```js
+const serializeMDX = require("./serialize-mdx");
+const fs = require("fs");
+const path = require("path");
+const unified = require("unified");
+const remarkParse = require("remark-parse");
+const remarkMdx = require("remark-mdx");
+
+const filePath =
+  "../../src/content/docs/infrastructure/host-integrations/host-integrations-list/mysql-monitoring-integration.mdx";
+
+const mdx = fs.readFileSync(path.join(filePath));
+
+const ast = unified().use(remarkParse).use(remarkMdx).parse(mdx);
+
+// console.dir(ast, { depth: null });
+
+fs.writeFileSync("ast-test.json", JSON.stringify(ast, null, 2), "utf-8");
+
+const main = async () => {
+  const mdx = fs.readFileSync(path.join(filePath));
+
+  const html = await serializeMDX(mdx);
+
+  return html;
+};
+
+main().then((res) => console.log("Done"));
+```
