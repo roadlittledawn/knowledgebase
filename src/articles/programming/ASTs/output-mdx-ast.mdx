@@ -14,7 +14,6 @@ needsHelp: false
 This is an example file for reading an MDX file and writing its AST to a file.
 
 ```js
-const serializeMDX = require("./serialize-mdx");
 const fs = require("fs");
 const path = require("path");
 const unified = require("unified");
@@ -27,8 +26,6 @@ const filePath =
 const mdx = fs.readFileSync(path.join(filePath));
 
 const ast = unified().use(remarkParse).use(remarkMdx).parse(mdx);
-
-// console.dir(ast, { depth: null });
 
 fs.writeFileSync("ast-test.json", JSON.stringify(ast, null, 2), "utf-8");
 
