@@ -10,10 +10,10 @@ skillLevel: 3
 needsHelp: false
 ---
 
-Pretty handy little git + bash script to run. This lists the 20 oldest files in a given repo:
+Pretty handy little git + bash script to run. This lists the 20 oldest files in a given repo in the `src/content` dir:
 
 ```bash
-git ls-tree -r --name-only HEAD | while read filename; do
+git ls-tree -r --name-only HEAD src/content | while read filename; do
 	echo "$(git log -1 --format="%ad" --date=short -- $filename) $filename";
 done | sort | head -20
 ```
