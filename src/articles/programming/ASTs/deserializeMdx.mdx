@@ -1,0 +1,28 @@
+---
+languages:
+  - Node
+topics:
+  - ASTs
+  - remark
+  - html
+  - unified
+skillLevel: 3
+needsHelp: false
+---
+
+Simple script to deserialize serialized HTML back to MDX:
+
+```js
+const deserializeHTML = require("./deserialize-html");
+
+const translatedHtml = `
+<p>serializedHtml here</p>
+`;
+
+const deserializedMdx = async (translatedHtml) => {
+  const mdx = await deserializeHTML(translatedHtml);
+  return mdx;
+};
+
+deserializedMdx(translatedHtml).then((res) => console.log(res));
+```

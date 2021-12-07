@@ -1,0 +1,48 @@
+---
+topics:
+  - translation
+  - serialization
+skillLevel: 3
+needsHelp: false
+---
+
+Quick note. When serializing MDX to HTML, we wanted to use a new component called `DoNotTranslate` to indicate to Smartling everything inside it should be excluded from translation (human or machine). There are two ways to do this:
+
+- Wrap the children in a `<span class="notranslate"></span>` or a `<div class="notranslate"></div>`
+- Encode all the children's content in data attributes in an element so it's inscrutable to Smartling / human translators (we do this for `CodeBlock`)
+
+Given our setup, these handlers worked for nesting in an element with the `notranslate` class:
+
+```js
+  DoNotTranslate: {
+    deserialize: deserializeComponent,
+    serialize: (h, node) =>
+      serializeComponent(h, node, {
+        classNames: 'notranslate',
+        wrapChildren: false,
+      }),
+  }
+```
+
+Given our setup, these handlers worked to encode children:
+
+```js
+  DoNotTranslate: {
+    deserialize: (h, node) => {
+      return h(
+        node,
+        node.properties.dataTag,
+        deserializeJSValue(node.properties.dataProps)
+      );
+    },
+    serialize: (h, node) => {
+      const inferredTagName = node.type === 'mdxSpanElement' ? 'span' : 'div';
+      return h(node, inferredTagName, {
+        'data-type': 'component',
+        'data-component': 'DoNotTranslate',
+        'data-tag': inferredTagName,
+        'data-props': serializeJSValue(node),
+      });
+    }
+  }
+```

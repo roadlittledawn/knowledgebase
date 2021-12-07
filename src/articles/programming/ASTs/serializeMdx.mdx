@@ -1,0 +1,45 @@
+---
+languages:
+  - Node
+topics:
+  - ASTs
+  - remark
+  - html
+  - unified
+skillLevel: 3
+needsHelp: false
+---
+
+Here is a script i have to write constantly to see the output of serializing MDX to html on docs site
+
+```js
+const fs = require("fs");
+const serializeMDX = require("./serialize-mdx");
+const path = require("path");
+
+const filePath =
+  "../../src/content/docs/kubernetes-pixie/auto-telemetry-pixie/auto-telemetry-pixie-data-model.mdx";
+
+const main = async () => {
+  const mdx = fs.readFileSync(filePath);
+  const html = await serializeMDX(mdx);
+  console.log(html);
+};
+
+main().then((res) => console.log(res));
+```
+
+And here is a script to deserialize HTML back to MDX:
+
+```js
+const deserializeHTML = require("./deserialize-html");
+
+const translatedHtml = `<p>html here</p>`;
+
+const deserializedMdx = async (translatedHtml) => {
+  const mdx = await deserializeHTML(translatedHtml);
+  return mdx;
+};
+
+deserializedMdx(translatedHtml).then((res) => console.log(res));
+```
