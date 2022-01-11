@@ -1,0 +1,13 @@
+---
+title: Check to see what default branch name is
+languages:
+  - bash
+topics:
+  - git
+skillLevel: 2
+needsHelp: false
+---
+
+```bash
+git remote show heroku | grep 'HEAD branch' | cut -d' ' -f5
+```
