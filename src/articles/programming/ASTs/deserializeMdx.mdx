@@ -16,6 +16,7 @@ Assumptions:
 
 - reads a file from root of project called `net-agent-config.html`. this should be the serialized HTML we get back from Smartling.
 - writes a file to root of project called `net-agent-configuration.mdx`.
+- obviously assumes that this runs in docs-website repo where `deserialize-html` and all its imports are avilable.
 
 We could then run `yarn verify-mdx` on it to ensure it's parsable by `gatsby-plugin-mdx`.
 
