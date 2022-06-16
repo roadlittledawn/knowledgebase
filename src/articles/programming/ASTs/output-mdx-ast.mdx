@@ -20,8 +20,10 @@ const unified = require("unified");
 const remarkParse = require("remark-parse");
 const remarkMdx = require("remark-mdx");
 
-const filePath =
-  "../../src/content/docs/infrastructure/host-integrations/host-integrations-list/mysql-monitoring-integration.mdx";
+const filePath = path.join(
+  process.cwd(),
+  'src/content/docs/infrastructure/host-integrations/host-integrations-list/mysql-monitoring-integration.mdx"'
+);
 
 const mdx = fs.readFileSync(path.join(filePath));
 
@@ -32,9 +34,9 @@ fs.writeFileSync("ast-test.json", JSON.stringify(ast, null, 2), "utf-8");
 const main = async () => {
   const mdx = fs.readFileSync(path.join(filePath));
 
-  const html = await serializeMDX(mdx);
+  // const html = await serializeMDX(mdx);
 
-  return html;
+  // return html;
 };
 
 main().then((res) => console.log("Done"));
