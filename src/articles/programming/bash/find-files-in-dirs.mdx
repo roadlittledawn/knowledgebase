@@ -18,4 +18,6 @@ Get count of all files in given directory with particular file extension
 
 ```bash
 find src/content/docs -mindepth 1 -type f -name "*.mdx" | wc -l
+# or using ls
+ls -lR src/content/docs/**/*.mdx | wc -l
 ```
