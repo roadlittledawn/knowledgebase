@@ -1,0 +1,1000 @@
+
+<div data-type="frontmatter" data-value="eyJ0aXRsZSI6IkFkdmFuY2VkIGNvbmZpZ3VyYXRpb24gZm9yIG5ldHdvcmsgbW9uaXRvcmluZyIsInRhZ3MiOlsiSW50ZWdyYXRpb25zIiwiTmV0d29yayBtb25pdG9yaW5nIiwiQWR2YW5jZWQgY29uZmlndXJhdGlvbiJdLCJtZXRhRGVzY3JpcHRpb24iOiJBZHZhbmNlZCBjb25maWd1cmF0aW9uIG9wdGlvbnMgZm9yIG5ldHdvcmsgbW9uaXRvcmluZyIsInJlZGlyZWN0cyI6WyIvZG9jcy9uZXR3b3JrLXBlcmZvcm1hbmNlLW1vbml0b3Jpbmcvc2V0dXAtcGVyZm9ybWFuY2UtbW9uaXRvcmluZy9hZHZhbmNlZC1jb25maWcvIl19">
+  <div data-key="title">Advanced configuration for network monitoring</div>
+</div>
+<p>If you want to explore all the options you can use when configuring the monitoring of your network performance, see the following sections.</p>
+<h2 id="snmp-base-yml-template">SNMP-base YAML sample file</h2>
+<p>Here's an example of the various configuration options available in the <code class="notranslate">snmp-base.yaml</code> file used by the <strong>ktranslate</strong> docker image to poll for SNMP and flow data devices. You can also see a heavily-commented sample in the <a href="https://github.com/kentik/ktranslate/blob/main/config/snmp.yaml.sample">ktranslate repository on GitHub</a>.</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgIyBTYW1wbGUgb2YgU05NUCB2MmMgZGV2aWNlXG4gIHVwc19zbm1wdjJjX18xMC4xMC4wLjIwMTpcbiAgICBkZXZpY2VfbmFtZTogdXBzX3NubXB2MmNcbiAgICBkZXZpY2VfaXA6IDEwLjEwLjAuMjAxXG4gICAgc25tcF9jb21tOiBwdWJsaWNcbiAgICBvaWQ6IC4xLjMuNi4xLjQuMS4zMTguMS4zLjI3XG4gICAgZGVzY3JpcHRpb246IFwiQVBDIFdlYi9TTk1QIE1hbmFnZW1lbnQgQ2FyZCAoTUI6djQuMS4wIFBGOnY2LjIuMSBQTjphcGNfaHcwNV9hb3NfNjIxLmJpbiBBRjE6djYuMi4xIEFOMTphcGNfaHcwNV9zdW14XzYyMS5iaW4gTU46QVA5NTM3U1VNIEhSOjA1IFNOOiBBQkMxMjNERUY0NTYgTUQ6MDUvMjEvMjAxNikgKEVtYmVkZGVkIFBvd2VyTmV0IFNOTVAgQWdlbnQgU1cgdjIuMiBjb21wYXRpYmxlKVwiXG4gICAgbGFzdF9jaGVja2VkOiAyMDIxLTExLTA5VDE4OjE0OjU5LjkwNzgyMTQ4OVpcbiAgICBtaWJfcHJvZmlsZTogYXBjX3Vwcy55bWxcbiAgICBwcm92aWRlcjoga2VudGlrLXVwc1xuICAgIHBvbGxfdGltZV9zZWM6IDMwMFxuICAgIHJldHJpZXM6IDFcbiAgICB0aW1lb3V0X21zOiA1MDAwXG4gICAgdXNlcl90YWdzOlxuICAgICAgb3duaW5nX3RlYW06IGRjX29wc1xuICAgIGRpc2NvdmVyZWRfbWliczpcbiAgICAtIFBvd2VyTmV0LU1JQl9VUFNcbiAgICAtIFRDUC1NSUJcbiAgICAtIFVEUC1NSUJcbiAgIyBTYW1wbGUgb2YgU05NUCB2MyBkZXZpY2VcbiAgcm91dGVyX3NubXB2M19fMTAuMTAuMC4yMDI6XG4gICAgZGV2aWNlX25hbWU6IHJvdXRlcl9zbm1wdjNcbiAgICBkZXZpY2VfaXA6IDEwLjEwLjAuMjAyXG4gICAgc25tcF92MzpcbiAgICAgIHVzZXJfbmFtZTogdXNlck5hbWV2M1xuICAgICAgYXV0aGVudGljYXRpb25fcHJvdG9jb2w6IE1ENVxuICAgICAgYXV0aGVudGljYXRpb25fcGFzc3BocmFzZTogYXV0aFBhc3NQcml2YWN5XG4gICAgICBwcml2YWN5X3Byb3RvY29sOiBBRVMyNTZcbiAgICAgIHByaXZhY3lfcGFzc3BocmFzZTogcGFzc1ByaXZhY3lcbiAgICBvaWQ6IC4xLjMuNi4xLjQuMS45LjEuNTQ0XG4gICAgZGVzY3JpcHRpb246IFwiQ2lzY28gSU9TIFNvZnR3YXJlLCAzODAwIFNvZnR3YXJlIChDMzg0NS1BRFZFTlRFUlBSSVNFSzktTSksIFZlcnNpb25cbiAgICAgIDE1LjEoMylUNCwgUkVMRUFTRSBTT0ZUV0FSRSAoZmMxKVxcclxcblRlY2huaWNhbCBTdXBwb3J0OiBodHRwOi8vd3d3LmNpc2NvLmNvbS90ZWNoc3VwcG9ydFxcclxcbkNvcHlyaWdodFxuICAgICAgKGMpIDE5ODYtMjAxMiBieSBDaXNjbyBTeXN0ZW1zLCBJbmMuXFxyXFxuQ29tcGlsZWQgVGh1IDI0LU1heS0xMiAwNDoyNyBieSBwcm9kX3JlbF90ZWFtXCJcbiAgICBsYXN0X2NoZWNrZWQ6IDIwMjEtMTEtMDlUMTg6MTQ6NTkuOTA3ODIxNDg5WlxuICAgIG1pYl9wcm9maWxlOiBjaXNjby1hc3IueW1sXG4gICAgcHJvdmlkZXI6IGtlbnRpay1yb3V0ZXJcbiAgICB1c2VyX3RhZ3M6XG4gICAgICBvd25pbmdfdGVhbTogY29yZS1uZXR3b3JraW5nXG4gICAgZGlzY292ZXJlZF9taWJzOlxuICAgIC0gQkdQNC1NSUJcbiAgICAtIENJU0NPLU1FTU9SWS1QT09MLU1JQlxuICAgIC0gQ0lTQ08tUFJPQ0VTUy1NSUJcbiAgICAtIElGLU1JQlxuICAgIC0gT1NQRi1NSUJcbiAgICBlbmdpbmVfaWQ6IFwiODA6MDA6MDE6MDE6MGE6MTQ6MWU6MjhcIlxuICAgIG1hdGNoX2F0dHJpYnV0ZXM6XG4gICAgICBpZl9pbnRlcmZhY2VfbmFtZTogXCJeVGVuLip8XkdpZy4qXCJcbiAgICAgIFwiIWlmX0FsaWFzXCI6IFwiW1V1XXBsaW5rXCJcbiAgIyBTYW1wbGUgb2YgU05NUCB2MSBkZXZpY2VcbiAgbmV0Ym90el9zbm1wdjFfXzEwLjEwLjAuMjAzOlxuICAgIGRldmljZV9uYW1lOiBuZXRib3R6X3NubXB2MVxuICAgIGRldmljZV9pcDogMTAuMTAuMC4yMDFcbiAgICBzbm1wX2NvbW06IHB1YmxpY1xuICAgIHVzZV9zbm1wX3YxOiB0cnVlXG4gICAgb2lkOiAuMS4zLjYuMS40LjEuNTUyOC4xMDAuMjAuMTAuMjAxM1xuICAgIGRlc2NyaXB0aW9uOiBcIkxpbnV4IG5ldGJvdHo5MzBBN0EgMi42LjEyICMzMDcgV2VkIERlYyAyOSAxNToyNTozMiBFU1QgMjAxMCBwcGNcIlxuICAgIGxhc3RfY2hlY2tlZDogMjAyMS0xMS0wOVQxODoxNDo1OS45MDc4MjE0ODlaXG4gICAgbWliX3Byb2ZpbGU6IGFwYy1uZXRib3R6LnltbFxuICAgIHByb3ZpZGVyOiBrZW50aWstbmV0Ym90elxuICAgIHVzZXJfdGFnczpcbiAgICAgIG93bmluZ190ZWFtOiBzeXNfb3BzXG4gICAgZGlzY292ZXJlZF9taWJzOlxuICAgIC0gSUYtTUlCXG4gICAgLSBJUC1NSUJcbiAgICAtIFRDUC1NSUJcbiAgICAtIFVEUC1NSUJcbiAgICBub191c2VfYnVsa3dhbGthbGw6IHRydWVcbiAgIyBTYW1wbGUgb2YgXCJmbG93IG9ubHlcIiBkZXZpY2VcbiAgZmxvd19vbmx5X18xMC4xMC4wLjIxMDpcbiAgICBkZXZpY2VfbmFtZTogZmxvd19vbmx5XG4gICAgZGV2aWNlX2lwOiAxMC4xMC4wLjIxMFxuICAgIHVzZXJfdGFnczpcbiAgICAgIG93bmluZ190ZWFtOiBuZXRfZW5nXG4gICAgZmxvd19vbmx5OiB0cnVlXG4gICMgU2FtcGxlIG9mIFwicGluZyBvbmx5XCIgZGV2aWNlXG4gIHBpbmdfb25seV9fMTAuMTAuMC4yMjA6XG4gICAgZGV2aWNlX25hbWU6IHBpbmdfb25seVxuICAgIGRldmljZV9pcDogMTAuMTAuMC4yMjBcbiAgICB1c2VyX3RhZ3M6XG4gICAgICBvd25pbmdfdGVhbTogbG9hZF9iYWxhbmNpbmdcbiAgICBwaW5nX29ubHk6IHRydWVcbiAgICBwaW5nX2ludGVydmFsX3NlYzogNVxuICAjIFNhbXBsZSBvZiBBcmlzdGEgZUFQSSBkZXZpY2VcbiAgYXJpc3RhX2VhcGlfMTAuMTAuMC4yMzA6XG4gICAgZGV2aWNlX25hbWU6IGFyaXN0YV9lYXBpXG4gICAgZGV2aWNlX2lwOiAxMC4xMC4wLjIzMFxuICAgIHNubXBfY29tbTogcHVibGljXG4gICAgb2lkOiAuMS4zLjYuMS40LjEuMzAwNjUuMS4zMDExLjcwMjAuMzczNS4yNC4yODc4LjJcbiAgICBkZXNjcmlwdGlvbjogXCJBcmlzdGEgTmV0d29ya3MgRU9TIHZlcnNpb24gNC4yMi45TSBydW5uaW5nIG9uIGFuIEFyaXN0YVxuICAgICAgTmV0d29ya3MgRENTLTcwMjBTUi0yNEMyXCJcbiAgICBsYXN0X2NoZWNrZWQ6IDIwMjEtMTEtMDlUMTg6MTQ6NTkuOTA3ODIxNDg5WlxuICAgIG1pYl9wcm9maWxlOiBhcmlzdGEtc3dpdGNoLnltbFxuICAgIHByb3ZpZGVyOiBrZW50aWstc3dpdGNoXG4gICAgZGlzY292ZXJlZF9taWJzOlxuICAgIC0gQVJJU1RBLUJHUDRWMi1NSUJcbiAgICAtIEFSSVNUQS1RVUVVRS1NSUJcbiAgICAtIEJHUDQtTUlCXG4gICAgLSBIT1NULVJFU09VUkNFUy1NSUJcbiAgICAtIElGLU1JQlxuICAgIGV4dDpcbiAgICAgIGVhcGlfY29uZmlnOlxuICAgICAgICB1c2VybmFtZTogdXNlcm5hbWVBUElcbiAgICAgICAgcGFzc3dvcmQ6IHBhc3N3b3JkQVBJXG4gICAgICAgIHRyYW5zcG9ydDogaHR0cHNcbiAgICAgICAgcG9ydDogNDQzXG50cmFwOlxuICBsaXN0ZW46IDEyNy4wLjAuMToxNjIwXG4gIGNvbW11bml0eTogcHVibGljXG4gIHZlcnNpb246IFwiXCJcbiAgdHJhbnNwb3J0OiBcIlwiXG4gIHYzX2NvbmZpZzogbnVsbFxuZGlzY292ZXJ5OlxuICBjaWRyczpcbiAgLSAxMC4wLjAuMC8yNFxuICAtIDEwLjAuMC4yMDIvMzJcbiAgaWdub3JlX2xpc3Q6XG4gIC0gMTAuMC4wLjk4XG4gIC0gMTAuMC4wLjk5XG4gIGRlYnVnOiBmYWxzZVxuICBwb3J0czpcbiAgLSAxNjFcbiAgLSAxMTYxXG4gIGRlZmF1bHRfY29tbXVuaXRpZXM6XG4gIC0gcHVibGljXG4gIC0gcHVibGljMTIzXG4gIC0gUHVibCFjQUJDXG4gIHVzZV9zbm1wX3YxOiBmYWxzZVxuICBkZWZhdWx0X3YzOiBudWxsXG4gIGFkZF9taWJzOiB0cnVlXG4gIHRocmVhZHM6IDRcbiAgYWRkX2RldmljZXM6IHRydWVcbiAgcmVwbGFjZV9kZXZpY2VzOiB0cnVlXG4gIG5vX2RlZHVwX2VuZ2luZV9pZDogZmFsc2VcbiAgY2hlY2tfYWxsX2lwczogZmFsc2Vcbmdsb2JhbDpcbiAgcG9sbF90aW1lX3NlYzogNjBcbiAgZHJvcF9pZl9vdXRzaWRlX3BvbGw6IGZhbHNlXG4gIG1pYl9wcm9maWxlX2RpcjogL2V0Yy9rdHJhbnNsYXRlL3Byb2ZpbGVzXG4gIG1pYnNfZGI6IC9ldGMva3RyYW5zbGF0ZS9taWJzLmRiXG4gIG1pYnNfZW5hYmxlZDpcbiAgLSBBUklTVEEtQkdQNFYyLU1JQlxuICAtIEFSSVNUQS1RVUVVRS1NSUJcbiAgLSBCR1A0LU1JQlxuICAtIENJU0NPLU1FTU9SWS1QT09MLU1JQlxuICAtIENJU0NPLVBST0NFU1MtTUlCXG4gIC0gSE9TVC1SRVNPVVJDRVMtTUlCXG4gIC0gSUYtTUlCXG4gIC0gT1NQRi1NSUJcbiAgLSBQb3dlck5ldC1NSUJfVVBTXG4gIHRpbWVvdXRfbXM6IDMwMDBcbiAgcmV0cmllczogMFxuICBnbG9iYWxfdjM6IG51bGxcbiAgcmVzcG9uc2VfdGltZTogZmFsc2VcbiAgdXNlcl90YWdzOlxuICAgIGVudmlyb25tZW50OiBwcm9kdWN0aW9uXG4gIG1hdGNoX2F0dHJpYnV0ZXM6XG4gICAgaWZfRGVzY3JpcHRpb246IFwiLipXQU4uKlwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTgsImNvbHVtbiI6MSwib2Zmc2V0Ijo4MzV9LCJlbmQiOnsibGluZSI6MTc3LCJjb2x1bW4iOjQsIm9mZnNldCI6NTExM30sImluZGVudCI6WzEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxXX19"></pre>
+<div data-type="component" data-component="CollapserGroup">
+  <div data-type="prop" data-prop="children">
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiZGV2aWNlcyJ9LHsidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ0aXRsZSIsInZhbHVlIjoiRGV2aWNlcyBzZWN0aW9uIn1d">
+      <div data-type="prop" data-prop="title">Devices section</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTg3LCJjb2x1bW4iOjIxLCJvZmZzZXQiOjUyNTN9LCJlbmQiOnsibGluZSI6MTg3LCJjb2x1bW4iOjQxLCJvZmZzZXQiOjUyNzN9fX19XQ==">
+                <p>Key name</p>
+              </th>
+              <th data-type="component">
+                <p>Required</p>
+              </th>
+              <th data-type="component">
+                <p>Description</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>device_name</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Name of the device. This is the unique identifier for the device in New Relic.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>device_ip</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Target IP of the device.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>snmp_comm</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMPv1/2c)</p>
+              </td>
+              <td data-type="component">
+                <p><code class="notranslate">SNMPv1/2c</code> community string to use.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>use_snmp_v1</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMPv1)</p>
+              </td>
+              <td data-type="component">
+                <p>Indicates whether to use SNMPv1. By default, it's set to <code class="notranslate">false</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>snmp_v3</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMPv3)</p>
+              </td>
+              <td data-type="component">
+                <p><a href="#snmpv3-config">SNMP v3 config</a></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>debug</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates whether to enable debug level logging during SNMP polling. By default, it's set to <code class="notranslate">false</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>port</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Port to send SNMP queries to. By default, it's set to port <code class="notranslate">161</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>oid</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMP polling)</p>
+              </td>
+              <td data-type="component">
+                <p>The discovered <code class="notranslate">systemObjectID | sysObjectID | sysOID</code> for the device. This is used to match the device to a known SNMP profile and set the <code class="notranslate">provider</code> attribute. If no match is found, this sets the <code class="notranslate">provider</code> as a <a href="/docs/network-performance-monitoring/troubleshooting/snmp-discovery-kentik-default">kentik-default</a> device.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>description</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>The discovered <code class="notranslate">sysDescr</code> of the device. This field is informational.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>last_checked</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Timestamp when this device was last discovered by the <code class="notranslate">ktranslate</code> docker image. This field is informational.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>mib_profile</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMP polling)</p>
+              </td>
+              <td data-type="component">
+                <p>SNMP Profile file that was associated with this device during the discovery run based on its <code class="notranslate">sysOID</code>. <strong>If this starts with a bang (!) token, it will override the automatic matching from the <code class="notranslate">sysOID</code> and use a manual override.</strong> Ex: <code class="notranslate">"!cisco-asa.yml"</code> (quotes are required).</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>provider</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for New Relic)</p>
+              </td>
+              <td data-type="component">
+                <p>Value used during entity synthesis for New Relic. This is automatically created based on the matched <code class="notranslate">mib_profile</code> and must match one of the rules in the <a href="https://github.com/newrelic/entity-definitions/search?q=%22attribute%3A+provider%22+filename%3Adefinition.yml">entity-definitions</a> repository in order for an entity to be created. If you are manually adding devices, you will need to take caution to make sure this value is valid.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>poll_time_sec</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates the SNMP polling frequency in seconds. This setting is used to override the <code class="notranslate">global.poll_time_sec</code> attribute.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>retries</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates the number of attempts to retry polling SNMP OIDs. This setting is used to override the <code class="notranslate">global.retries</code> attribute.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>timeout_ms</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates the SNMP polling timeout in milliseconds. This setting is used to override the <code class="notranslate">global.timeout_ms</code> attribute.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>user_tags</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">key:value</code> pair attributes to give more context to the device. Tags at this level will be appended to any tags applied in the <code class="notranslate">global.user_tags</code> attribute.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>discovered_mibs</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>List of MIBs pulled from matched <code class="notranslate">mib_profile</code> that this device can respond to. This field is informational.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>engine_id</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>The unique engine ID discovered for this device's SNMP agent. Generally found during SNMP v3 discovery. This field is informational.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>match_attributes</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">attribute:regex</code> pairs to add metrics to allowlist. Pairs at this level will be appended to any pairs applied in the <code class="notranslate">global.match_attributes</code> attribute. Uses the <a href="https://github.com/google/re2/wiki/Syntax">RE2</a> syntax and has a default <code class="notranslate">OR</code> operator. Prefix key with <code class="notranslate">!</code> to force to <code class="notranslate">AND</code> operators.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>monitor_admin_shut</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates whether to monitor interfaces in <code class="notranslate">Administratively Shutdown</code> status. By default, it's set to <code class="notranslate">false</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>no_use_bulkwalkall</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Disables the SNMP <code class="notranslate">GETBULK</code> request action when <code class="notranslate">true</code>. By default, it's set to <code class="notranslate">false</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>response_time</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates whether <a href="#response_time-attribute">response time</a> polling is enabled for this device. By default, it's set to <code class="notranslate">false</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ping_only</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Disables all SNMP polling and enables <a href="#response_time-attribute">response time</a> polling for this device when <code class="notranslate">true</code>. This setting will override the <code class="notranslate">global.response_time</code> attribute. By default, it's set to <code class="notranslate">false</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ping_interval_sec</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>This setting is used to override the default rate of 1 packet/sec used during <code class="notranslate">ping_only</code> | <code class="notranslate">response_time</code> polling.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>flow_only</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Disables all SNMP polling when <code class="notranslate">true</code>. By default, it's set to <code class="notranslate">false</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ext</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for API Polling)</p>
+              </td>
+              <td data-type="component">
+                <p><a href="#api-polling-config">API Polling config</a></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoidHJhcCJ9LHsidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ0aXRsZSIsInZhbHVlIjoiVHJhcCBzZWN0aW9uIn1d">
+      <div data-type="prop" data-prop="title">Trap section</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6NTQyLCJjb2x1bW4iOjIxLCJvZmZzZXQiOjEzMjUxfSwiZW5kIjp7ImxpbmUiOjU0MiwiY29sdW1uIjo0MSwib2Zmc2V0IjoxMzI3MX19fX1d">
+                <p>Key name</p>
+              </th>
+              <th data-type="component">
+                <p>Required</p>
+              </th>
+              <th data-type="component">
+                <p>Description</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>listen</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Listening IP port for receiving SNMP traps. By default it's set to <code class="notranslate">127.0.0.1:1620</code>. Using the SNMP Trap default of <code class="notranslate">162</code> requires replacing <code class="notranslate">--net=host</code> in your run command with <code class="notranslate">-p 162:1620/udp</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>community</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv1/v2c community string for receiving SNMP traps.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>version</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMP version to use. Options are <code class="notranslate">v1</code>, <code class="notranslate">v2c</code>, and <code class="notranslate">v3</code>. By default, it's set to <code class="notranslate">v2c</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>transport</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMP transport protocol to use. Options are <code class="notranslate">TCP</code> and <code class="notranslate">UDP</code>. By default, it's set to <code class="notranslate">UDP</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>v3_config</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><a href="#snmpv3-config">SNMP v3 config</a> to use. Only used if <code class="notranslate">version: v3</code>.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiZGlzY292ZXJ5In0seyJ0eXBlIjoibWR4QXR0cmlidXRlIiwibmFtZSI6InRpdGxlIiwidmFsdWUiOiJEaXNjb3Zlcnkgc2VjdGlvbiJ9XQ==">
+      <div data-type="prop" data-prop="title">Discovery section</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6NjI5LCJjb2x1bW4iOjIxLCJvZmZzZXQiOjE0ODY0fSwiZW5kIjp7ImxpbmUiOjYyOSwiY29sdW1uIjo0MSwib2Zmc2V0IjoxNDg4NH19fX1d">
+                <p>Key name</p>
+              </th>
+              <th data-type="component">
+                <p>Required</p>
+              </th>
+              <th data-type="component">
+                <p>Description</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>cidrs</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Array of target IP ranges in <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation">CIDR notation</a>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ignore_list</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Array of IP addresses that you wish to explicitly ignore during all discovery jobs.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>debug</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates whether to enable debug level logging during discovery. By default, it's set to <code class="notranslate">false</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ports</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Array of target ports to scan during SNMP polling.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>default_communities</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMPv1/2c)</p>
+              </td>
+              <td data-type="component">
+                <p>Array of SNMPv1/v2c community strings to scan during SNMP polling. This array is evaluated in order and discovery accepts the first passing community.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>use_snmp_v1</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMPv1)</p>
+              </td>
+              <td data-type="component">
+                <p>Indicates whether to use SNMPv1 during discovery. By default, it's set to <code class="notranslate">false</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>default_v3</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMPv3)</p>
+              </td>
+              <td data-type="component">
+                <p>Single <a href="#snmpv3-config">SNMPv3 configuration</a> to scan during SNMP polling.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>other_v3s</p>
+              </td>
+              <td data-type="component">
+                <p>✓ (Required for SNMPv3)</p>
+              </td>
+              <td data-type="component">
+                <p>Multiple <a href="#snmpv3-config">SNMPv3 configurations</a> to scan during SNMP polling. <strong>Use this option OR <code class="notranslate">default_v3</code>, not both</strong></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>add_devices</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Indicates whether to add discovered devices to the <code class="notranslate">devices</code> section of the <code class="notranslate">snmp-base.yaml</code> file. By default, it's set to <code class="notranslate">true</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>add_mibs</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Indicates whether to add discovered MIBs to the <code class="notranslate">global.mibs_enabled</code> section of the <code class="notranslate">snmp-base.yaml</code> file. By default, it's set to <code class="notranslate">true</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>threads</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Integer limit of threads to use during discovery. It should be less than the number of cores available to the container. By default it's set to <code class="notranslate">4</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>replace_devices</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Indicates whether to replace discovered devices if they already exist in the <code class="notranslate">devices</code> section of the <code class="notranslate">snmp-base.yaml</code> file. By default, it's set to <code class="notranslate">true</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>no_dedup_engine_id</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>When set to <code class="notranslate">true</code>, disables deduplication of discovered devices if it appears that they are the same device, based on their reported SNMP engine ID. By default, it's set to <code class="notranslate">false</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>check_all_ips</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>When set to <code class="notranslate">true</code>, forces the discovery job to attempt SNMP connectivity against every target IP address from the <code class="notranslate">cidrs</code> array, without checking for liveliness first via TCP port scan. This setting will slow down discovery jobs, but can help bypass issues where discovery is failing against devices that are not listed in your <code class="notranslate">cidrs</code> array with <code class="notranslate">/32</code> overrides. By default, it's set to <code class="notranslate">false</code></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiZ2xvYmFsIn0seyJ0eXBlIjoibWR4QXR0cmlidXRlIiwibmFtZSI6InRpdGxlIiwidmFsdWUiOiJHbG9iYWwgc2VjdGlvbiJ9XQ==">
+      <div data-type="prop" data-prop="title">Global section</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6ODQ0LCJjb2x1bW4iOjIxLCJvZmZzZXQiOjE5NTg3fSwiZW5kIjp7ImxpbmUiOjg0NCwiY29sdW1uIjo0MSwib2Zmc2V0IjoxOTYwN319fX1d">
+                <p>Key name</p>
+              </th>
+              <th data-type="component">
+                <p>Required</p>
+              </th>
+              <th data-type="component">
+                <p>Description</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>poll_time_sec</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Time in seconds to poll devices. This can be overridden per device using the <code class="notranslate">devices.&#x3C;deviceName>.poll_time_sec</code> attribute. By default, it's set to <code class="notranslate">60</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>drop_if_outside_poll</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates whether to drop all values from this cycle if polling takes longer than the value set in <code class="notranslate">poll_time_sec</code>. By default, it's set to <code class="notranslate">false</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>mib_profile_dir</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Directory to find curated MIB profiles. These are pulled into the <code class="notranslate">ktranslate</code> image automatically from Kentik's <a href="https://github.com/kentik/snmp-profiles">snmp-profiles</a> repository and can be overridden at Docker runtime by creating a volume mount of your own local directory of profiles.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>mibs_db</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component"></td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>mibs_enabled</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Array of all active MIBs the <code class="notranslate">ktranslate</code> docker image will poll. This list is automatically generated during discovery if the <code class="notranslate">discovery_add_mibs</code> attribute is <code class="notranslate">true</code>. MIBs not listed here will not be polled on any device in the configuration file. You can specify a SNMP table directly in a MIB file using <code class="notranslate">MIB-NAME.tableName</code> syntax. Ex: <code class="notranslate">HOST-RESOURCES-MIB.hrProcessorTable</code>.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>timeout_ms</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Time in milliseconds SNMP queries timeout. This can be overridden per device using the <code class="notranslate">devices.&#x3C;deviceName>.timeout_ms</code> attribute. By default, it's set to <code class="notranslate">5000</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>retries</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Number of attempts to retry failed SNMP polls. This can be overridden per device using the <code class="notranslate">devices.&#x3C;deviceName>.retries</code> attribute. By default, it's set to <code class="notranslate">0</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>user_tags</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">key:value</code> pair attributes to give more context to the device. Tags at this level will be applied to all devices in the configuration file.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>match_attributes</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">attribute:regex</code> pairs to add metrics to allowlist. Pairs at this level will matched against all devices in the configuration file. Uses the <a href="https://github.com/google/re2/wiki/Syntax">RE2</a> syntax and has a default <code class="notranslate">OR</code> operator. Prefix key with <code class="notranslate">!</code> to force to <code class="notranslate">AND</code> operators.</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>response_time</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Indicates whether <a href="#response_time-attribute">response time</a> polling is enabled for all devices in the configuration file. By default, it's set to <code class="notranslate">false</code>.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoic25tcHYzLWNvbmZpZyJ9LHsidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ0aXRsZSIsInZhbHVlIjoiT3B0aW9uYWwgU05NUHYzIGNvbmZpZ3VyYXRpb24ifV0=">
+      <div data-type="prop" data-prop="title">Optional SNMPv3 configuration</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6OTk1LCJjb2x1bW4iOjIxLCJvZmZzZXQiOjIzMzk2fSwiZW5kIjp7ImxpbmUiOjk5NSwiY29sdW1uIjo0MSwib2Zmc2V0IjoyMzQxNn19fX1d">
+                <p>Key name</p>
+              </th>
+              <th data-type="component">
+                <p>Required</p>
+              </th>
+              <th data-type="component">
+                <p>Description</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>user_name</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>User name for SNMPv3 authentication</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>authentication_protocol</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPv3 authentication protocol. The possible values are <code class="notranslate">NoAuth</code>, <code class="notranslate">MD5</code>, or <code class="notranslate">SHA</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>authentication_passphrase</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv3 authentication passphrase</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>privacy_protocol</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPv3 privacy protocol. The possible values are <code class="notranslate">AuthNoPriv</code>, <code class="notranslate">DES</code>, <code class="notranslate">AES</code>, <code class="notranslate">AES192</code>, <code class="notranslate">AES256</code>, <code class="notranslate">AES192C</code>, or <code class="notranslate">AES256C</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>privacy_passphrase</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv3 privacy passphrase</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>context_engine_id</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv3 context engine ID</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>context_name</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv3 context name</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div data-type="component" data-component="Callout" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ2YXJpYW50IiwidmFsdWUiOiJ0aXAifV0=">
+          <div data-type="prop" data-prop="children">
+            <p>You can use <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a> natively in your SNMP v3 config using the <code class="notranslate">aws.sm.$SECRET_NAME</code> syntax, replacing <code class="notranslate">$SECRET_NAME</code> as necessary to have <strong>ktranslate</strong> pull in your credentials during Docker runtime.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiYXBpLXBvbGxpbmctY29uZmlnIn0seyJ0eXBlIjoibWR4QXR0cmlidXRlIiwibmFtZSI6InRpdGxlIiwidmFsdWUiOiJPcHRpb25hbCBBUEkgUG9sbGluZyBjb25maWd1cmF0aW9ucyJ9XQ==">
+      <div data-type="prop" data-prop="title">Optional API Polling configurations</div>
+      <div data-type="prop" data-prop="children">
+        <p><strong>Arista eAPI</strong></p>
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTExNiwiY29sdW1uIjoyMSwib2Zmc2V0IjoyNTYxNX0sImVuZCI6eyJsaW5lIjoxMTE2LCJjb2x1bW4iOjQxLCJvZmZzZXQiOjI1NjM1fX19fV0=">
+                <p>Key name</p>
+              </th>
+              <th data-type="component">
+                <p>Required</p>
+              </th>
+              <th data-type="component">
+                <p>Description</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>username</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>User name for eAPI authentication</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>password</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>Password for eAPI authentication</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>transport</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>Transport protocol for eAPI authentication. The possible values are <code class="notranslate">https</code> and <code class="notranslate">http</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>port</p>
+              </td>
+              <td data-type="component">
+                <p>✓</p>
+              </td>
+              <td data-type="component">
+                <p>TCP port number for eAPI authentication</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div data-type="component" data-component="Callout" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ2YXJpYW50IiwidmFsdWUiOiJ0aXAifV0=">
+          <div data-type="prop" data-prop="children">
+            <p>You can use <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a> natively in your eAPI config using the <code class="notranslate">aws.sm.$SECRET_NAME</code> syntax, replacing <code class="notranslate">$SECRET_NAME</code> as necessary to have <strong>ktranslate</strong> pull in your credentials during Docker runtime.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<h2 id="external-config-files">Optional external config files</h2>
+<p>To support a wide variety of configuration and automation needs, you can use external files that you volume mount into your Docker container to decouple certain elements of the standard configuration file.</p>
+<p>The syntax for these files is <code class="notranslate">"@fileName.extension"</code>, including the double quotes.</p>
+<h3>Discovery CIDRs</h3>
+<p>Example:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGlzY292ZXJ5OlxuICBjaWRyczogXCJAY2lkcnMueWFtbFwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTE5MCwiY29sdW1uIjoxLCJvZmZzZXQiOjI3NDAzfSwiZW5kIjp7ImxpbmUiOjExOTMsImNvbHVtbiI6NCwib2Zmc2V0IjoyNzQ0OH0sImluZGVudCI6WzEsMSwxXX19"></pre>
+<p>The CIDRs file should use a YAML list syntax like this:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiLSAxMC4xMC4wLjAvMjRcbi0gMTAuMjAuMC4wLzI0XG4tIDE5Mi4xNjguMC4yMS8zMiIsInBvc2l0aW9uIjp7InN0YXJ0Ijp7ImxpbmUiOjExOTcsImNvbHVtbiI6MSwib2Zmc2V0IjoyNzUwN30sImVuZCI6eyJsaW5lIjoxMjAxLCJjb2x1bW4iOjQsIm9mZnNldCI6Mjc1NjZ9LCJpbmRlbnQiOlsxLDEsMSwxXX19"></pre>
+<h3>Devices</h3>
+<p>Example:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgLSBcIkBuZXRlbmctZGV2aWNlcy55YW1sXCJcbiAgLSBcIkBkYy1vcHMueWFtbFwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTIwNywiY29sdW1uIjoxLCJvZmZzZXQiOjI3NTkxfSwiZW5kIjp7ImxpbmUiOjEyMTEsImNvbHVtbiI6NCwib2Zmc2V0IjoyNzY1N30sImluZGVudCI6WzEsMSwxLDFdfX0="></pre>
+<p>The device files should use the same syntax as the standard <code class="notranslate">devices</code> section of the main config file, omitting the optional fields that are generated during discovery:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgIyBTYW1wbGUgb2YgU05NUCB2MmMgZGV2aWNlXG4gIHVwc19zbm1wdjJjX18xMC4xMC4wLjIwMTpcbiAgICBkZXZpY2VfbmFtZTogdXBzX3NubXB2MmNcbiAgICBkZXZpY2VfaXA6IDEwLjEwLjAuMjAxXG4gICAgc25tcF9jb21tOiBwdWJsaWNcbiAgICBvaWQ6IC4xLjMuNi4xLjQuMS4zMTguMS4zLjI3XG4gICAgbWliX3Byb2ZpbGU6IGFwY191cHMueW1sXG4gICAgcHJvdmlkZXI6IGtlbnRpay11cHNcbiAgICBwb2xsX3RpbWVfc2VjOiAzMDBcbiAgICByZXRyaWVzOiAxXG4gICAgdGltZW91dF9tczogNTAwMFxuICAgIHVzZXJfdGFnczpcbiAgICAgIG93bmluZ190ZWFtOiBkY19vcHMiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxMjE1LCJjb2x1bW4iOjEsIm9mZnNldCI6Mjc4Mjl9LCJlbmQiOnsibGluZSI6MTIzMCwiY29sdW1uIjo0LCJvZmZzZXQiOjI4MTcyfSwiaW5kZW50IjpbMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDFdfX0="></pre>
+<h2 id="snmpv3-aws-secrets">SNMPv3 - AWS Secrets</h2>
+<p><strong>ktranslate</strong> has built-in support for retrieving keys from <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a> to use in your SNMPv3 configuration.</p>
+<p>To use this feature, you will need to set the following 3 environmental variables and provide them to Docker at runtime:</p>
+<table data-type="component">
+  <thead data-type="component">
+    <tr data-type="component">
+      <th data-type="component" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTI0MSwiY29sdW1uIjoxNywib2Zmc2V0IjoyODU0OH0sImVuZCI6eyJsaW5lIjoxMjQxLCJjb2x1bW4iOjM3LCJvZmZzZXQiOjI4NTY4fX19fV0=">
+        <p>Name</p>
+      </th>
+      <th data-type="component">
+        <p>Description</p>
+      </th>
+    </tr>
+  </thead>
+  <tbody data-type="component">
+    <tr data-type="component">
+      <td data-type="component">
+        <p><a href="https://docs.aws.amazon.com/sdkref/latest/guide/setting-global-aws_access_key_id.html">AWS_ACCESS_KEY_ID</a></p>
+      </td>
+      <td data-type="component">
+        <p>Specifies the AWS access key used as part of the credentials to authenticate the user.</p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p><a href="https://docs.aws.amazon.com/sdkref/latest/guide/setting-global-aws_secret_access_key.html">AWS_SECRET_ACCESS_KEY</a></p>
+      </td>
+      <td data-type="component">
+        <p>Specifies the AWS secret key used as part of the credentials to authenticate the user.</p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p><a href="https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html#specifying-the-region">AWS_REGION</a></p>
+      </td>
+      <td data-type="component">
+        <p>Specifies the AWS Region to send requests to for commands requested using this profile.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>Example for Docker runtime:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoic2hlbGwiLCJtZXRhIjpudWxsLCJ2YWx1ZSI6ImRvY2tlciBydW4gLWQgLS1uYW1lIGt0cmFuc2xhdGUtc25tcCAtLXJlc3RhcnQgdW5sZXNzLXN0b3BwZWQgLS1uZXQ9aG9zdCBcXFxuICAtdiBgcHdkYC9zbm1wLWJhc2UueWFtbDovc25tcC1iYXNlLnlhbWwgXFxcbiAgLWUgTkVXX1JFTElDX0FQSV9LRVk9JFlPVVJfTlJfTElDRU5TRV9LRVkgXFxcbiAgLWUgQVdTX0FDQ0VTU19LRVlfSUQ9JFlPVVJfQVdTX0FDQ0VTU19LRVlfSUQgXFxcbiAgLWUgQVdTX1NFQ1JFVF9BQ0NFU1NfS0VZPSRZT1VSX0FXU19TRUNSRVRfQUNDRVNTX0tFWSBcXFxuICAtZSBBV1NfUkVHSU9OPSRZT1VSX0FXU19SRUdJT04gXFxcbiAga2VudGlrL2t0cmFuc2xhdGU6djIgXFxcbiAgICAtc25tcCAvc25tcC1iYXNlLnlhbWwgXFxcbiAgICAtbnJfYWNjb3VudF9pZD0kWU9VUl9OUl9BQ0NPVU5UX0lEIFxcXG4gICAgLWxvZ19sZXZlbD1pbmZvIFxcXG4gICAgLW1ldHJpY3M9amNoZiBcXFxuICAgIC10ZWVfbG9ncz10cnVlIFxcXG4gICAgbnIxLnNubXAiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxMjg2LCJjb2x1bW4iOjEsIm9mZnNldCI6Mjk1Njh9LCJlbmQiOnsibGluZSI6MTMwMCwiY29sdW1uIjo0LCJvZmZzZXQiOjMwMDU2fSwiaW5kZW50IjpbMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxXX19"></pre>
+<p>In your associated configuration file (<code class="notranslate">snmp-base.yaml</code>); you would update your SNMPv3 config snippet as follows, prefixing the secret name with <code class="notranslate">aws.sm.</code>:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiICBkZWZhdWx0X3YzOlxuICAgIHVzZXJfbmFtZTogYXdzLnNtLlNFQ1JFVF9OQU1FXzFcbiAgICBhdXRoZW50aWNhdGlvbl9wcm90b2NvbDogTUQ1XG4gICAgYXV0aGVudGljYXRpb25fcGFzc3BocmFzZTogYXdzLnNtLlNFQ1JFVF9OQU1FXzJcbiAgICBwcml2YWN5X3Byb3RvY29sOiBBRVMyNTZcbiAgICBwcml2YWN5X3Bhc3NwaHJhc2U6IGF3cy5zbS5TRUNSRVRfTkFNRV8zIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTMwNCwiY29sdW1uIjoxLCJvZmZzZXQiOjMwMjE1fSwiZW5kIjp7ImxpbmUiOjEzMTEsImNvbHVtbiI6NCwib2Zmc2V0IjozMDQzNX0sImluZGVudCI6WzEsMSwxLDEsMSwxLDFdfX0="></pre>
+<div data-type="component" data-component="Callout" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ2YXJpYW50IiwidmFsdWUiOiJ0aXAifV0=">
+  <div data-type="prop" data-prop="children">
+    <p>You need to create dedicated secrets per value. Note in the example above there are three distinct secret names in use.</p>
+  </div>
+</div>
+<h2 id="multiple-v3-discovery">Running discovery with multiple SNMP v3 profiles</h2>
+<p>To support running discovery jobs with multiple SNMP v3 profiles, you can replace the <code class="notranslate">discovery.default_v3</code> key with the <code class="notranslate">discovery.other_v3s</code> key, which holds an array of <a href="#snmpv3-config">SNMPv3 configurations</a>.</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiICBvdGhlcl92M3M6XG4gIC0gdXNlcl9uYW1lOiB0ZXN0MVxuICAgIGF1dGhlbnRpY2F0aW9uX3Byb3RvY29sOiBNRDVcbiAgICBhdXRoZW50aWNhdGlvbl9wYXNzcGhyYXNlOiBhdXRoUGFzczFcbiAgICBwcml2YWN5X3Byb3RvY29sOiBBRVMyNTZcbiAgICBwcml2YWN5X3Bhc3NwaHJhc2U6IHByaXZhY3lQYXNzMVxuICAgIGNvbnRleHRfZW5naW5lX2lkOiBcIlwiXG4gICAgY29udGV4dF9uYW1lOiBcIlwiXG4gIC0gdXNlcl9uYW1lOiB0ZXN0MlxuICAgIGF1dGhlbnRpY2F0aW9uX3Byb3RvY29sOiBTSEFcbiAgICBhdXRoZW50aWNhdGlvbl9wYXNzcGhyYXNlOiBhdXRoUGFzczJcbiAgICBwcml2YWN5X3Byb3RvY29sOiBERVNcbiAgICBwcml2YWN5X3Bhc3NwaHJhc2U6IHByaXZhY3lQYXNzMlxuICAgIGNvbnRleHRfZW5naW5lX2lkOiBcIlwiXG4gICAgY29udGV4dF9uYW1lOiBcIlwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTMyMSwiY29sdW1uIjoxLCJvZmZzZXQiOjMwODg4fSwiZW5kIjp7ImxpbmUiOjEzMzcsImNvbHVtbiI6NCwib2Zmc2V0IjozMTMyNX0sImluZGVudCI6WzEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDFdfX0="></pre>
+<h2 id="match_attributes-attribute">The <strong>match_attributes</strong> attribute</h2>
+<p>To support filtering of data that does not create value for your observability needs, you can set the <code class="notranslate">global.match_attributes.{}</code> and/or <code class="notranslate">devices.&#x3C;deviceName>.match_attributes.{}</code> attribute map.</p>
+<p>This will provide filtering at the <strong>ktranslate</strong> level, before shipping data to New Relic, giving you granular control over monitoring of things like interfaces.</p>
+<p>The default behavior of this map is an <code class="notranslate">OR</code> condition, but you can override this and force an <code class="notranslate">AND</code> operator by prefixing your key name with <code class="notranslate">!</code>. This is also useful to return only matched items and omit all <code class="notranslate">null</code> and <code class="notranslate">""</code> (empty) results.</p>
+<div data-type="component" data-component="CollapserGroup">
+  <div data-type="prop" data-prop="children">
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiZGVmYXVsdC1vci1udWxsIn0seyJ0eXBlIjoibWR4QXR0cmlidXRlIiwibmFtZSI6InRpdGxlIiwidmFsdWUiOiJEZWZhdWx0ICdPUicgd2l0aCBudWxsIGFuZCBlbXB0eSB2YWx1ZXMifV0=">
+      <div data-type="prop" data-prop="title">Default 'OR' with null and empty values</div>
+      <div data-type="prop" data-prop="children">
+        <p>Match when <code class="notranslate">if_Alias</code> begins with <code class="notranslate">Uplink</code> <strong>OR</strong> when <code class="notranslate">if_interface_name</code> begins with <code class="notranslate">Gig</code>, keep all <code class="notranslate">null</code> and <code class="notranslate">""</code> values:</p>
+        <pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgZGV2aWNlTmFtZTpcbiAgICAuLi5cbiAgICBtYXRjaF9hdHRyaWJ1dGVzOlxuICAgICAgaWZfQWxpYXM6IFwiXlVwbGluay4qXCJcbiAgICAgIGlmX2ludGVyZmFjZV9uYW1lOiBcIl5HaWcuKlwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTM1NCwiY29sdW1uIjoxLCJvZmZzZXQiOjMyMjQyfSwiZW5kIjp7ImxpbmUiOjEzNjIsImNvbHVtbiI6Mywib2Zmc2V0IjozMjQwM30sImluZGVudCI6WzEsMSwxLDEsMSwxLDEsMV19fQ=="></pre>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiYW5kLW5vLW51bGwifSx7InR5cGUiOiJtZHhBdHRyaWJ1dGUiLCJuYW1lIjoidGl0bGUiLCJ2YWx1ZSI6IidBTkQnLCBvbWl0IG51bGwgYW5kIGVtcHR5IHZhbHVlcyJ9XQ==">
+      <div data-type="prop" data-prop="title">'AND', omit null and empty values</div>
+      <div data-type="prop" data-prop="children">
+        <p>Match when <code class="notranslate">if_Alias</code> begins with <code class="notranslate">Uplink</code> <strong>AND</strong> when <code class="notranslate">if_interface_name</code> begins with <code class="notranslate">Gig</code>, drop all <code class="notranslate">null</code> and <code class="notranslate">""</code> values:</p>
+        <pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgZGV2aWNlTmFtZTpcbiAgICAuLi5cbiAgICBtYXRjaF9hdHRyaWJ1dGVzOlxuICAgICAgaWZfQWxpYXM6IFwiXlVwbGluay4qXCJcbiAgICAgIFwiIWlmX2ludGVyZmFjZV9uYW1lXCI6IFwiXkdpZy4qXCIiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxMzcwLCJjb2x1bW4iOjEsIm9mZnNldCI6MzI2MzR9LCJlbmQiOnsibGluZSI6MTM3OCwiY29sdW1uIjozLCJvZmZzZXQiOjMyNzk4fSwiaW5kZW50IjpbMSwxLDEsMSwxLDEsMSwxXX19"></pre>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoic2luZ2xlLW5vLW51bGwifSx7InR5cGUiOiJtZHhBdHRyaWJ1dGUiLCJuYW1lIjoidGl0bGUiLCJ2YWx1ZSI6IlNpbmdsZSBtYXRjaCwgb21pdCBudWxsIGFuZCBlbXB0eSB2YWx1ZXMifV0=">
+      <div data-type="prop" data-prop="title">Single match, omit null and empty values</div>
+      <div data-type="prop" data-prop="children">
+        <p>Match when <code class="notranslate">if_Alias</code> begins with <code class="notranslate">Uplink</code>, drop all <code class="notranslate">null</code> and <code class="notranslate">""</code> values:</p>
+        <pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgZGV2aWNlTmFtZTpcbiAgICAuLi5cbiAgICBtYXRjaF9hdHRyaWJ1dGVzOlxuICAgICAgXCIhaWZfQWxpYXNcIjogXCJeVXBsaW5rLipcIiIsInBvc2l0aW9uIjp7InN0YXJ0Ijp7ImxpbmUiOjEzODYsImNvbHVtbiI6MSwib2Zmc2V0IjozMjk4OH0sImVuZCI6eyJsaW5lIjoxMzkzLCJjb2x1bW4iOjMsIm9mZnNldCI6MzMxMTR9LCJpbmRlbnQiOlsxLDEsMSwxLDEsMSwxXX19"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+<h2 id="flow_only-attribute">The <strong>flow_only</strong> attribute</h2>
+<p>To support monitoring of devices where performance statistics are nor accessible, available, or desired, you can set the <code class="notranslate">devices.&#x3C;deviceName>.flow_only</code> attribute to <code class="notranslate">true</code>.</p>
+<p>This will generate a <strong>Flow Device</strong> entity which will only have telemetry in the <code class="notranslate">KFlow</code> event namespace. Alternatively, collecting flow telemetry from a device that is in your configuration file as an SNMP device will add decoration of the <code class="notranslate">KFlow</code> data to the pre-existing entity, such as a <strong>Router</strong> or <strong>Firewall</strong>.</p>
+<p>In New Relic, you can see the results of this polling by investigating the following events:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoic3FsIiwibWV0YSI6bnVsbCwidmFsdWUiOiJGUk9NIEtGbG93IFNFTEVDVCBjb3VudCgqKSBGQUNFVCBkZXZpY2VfbmFtZSBXSEVSRSBpbnN0cnVtZW50YXRpb24ubmFtZSA9ICduZXRmbG93LWV2ZW50cycgVElNRVNFUklFUyIsInBvc2l0aW9uIjp7InN0YXJ0Ijp7ImxpbmUiOjE0MDQsImNvbHVtbiI6MSwib2Zmc2V0IjozMzc5M30sImVuZCI6eyJsaW5lIjoxNDA2LCJjb2x1bW4iOjQsIm9mZnNldCI6MzM5MDV9LCJpbmRlbnQiOlsxLDFdfX0="></pre>
+<h2 id="response_time-attribute">The <strong>response_time</strong> and <strong>ping_only</strong> attributes</h2>
+<p>To support monitoring of devices where performance statistics are not accessible or available, or in simple cases where basic round-trip time (RTT) monitoring is required, you can either set the <code class="notranslate">global.response_time</code> or <code class="notranslate">devices.&#x3C;deviceName>.ping_only</code> attributes to <code class="notranslate">true</code>.</p>
+<p>This feature uses the <a href="https://pkg.go.dev/github.com/sparrc/go-ping">go-ping</a> package to send unprivileged UDP packets to devices in order to collect the average, min, max, and stddev round-trip time (RTT). This package also shows packet loss percentage for the endpoint based on sending one packet/sec from <code class="notranslate">ktranslate</code> to the device IP address, which can be overridden by setting the <code class="notranslate">devices.&#x3C;deviceName>.ping_interval_sec</code> attribute. You can enable the use of privileged ICMP packets by setting the <code class="notranslate">KENTIK_PING_PRIV=true</code> environment variable during Docker runtime.</p>
+<p>Setting the <code class="notranslate">global.response_time</code> attribute to <code class="notranslate">true</code> will add RTT monitoring on top of existing SNMP polling. To monitor devices with only the UDP|ICMP packets for RTT and no SNMP polling, use <code class="notranslate">devices.&#x3C;deviceName>.ping_only: true</code>.</p>
+<p>In New Relic, you can see the results of this polling by investigating the following metrics:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoic3FsIiwibWV0YSI6bnVsbCwidmFsdWUiOiJGUk9NIE1ldHJpYyBTRUxFQ1QgYXZlcmFnZShrZW50aWsucGluZy5BdmdSdHRNcykgQVMgJ0F2ZXJhZ2UnLCBtYXgoa2VudGlrLnBpbmcuTWF4UnR0TXMpIEFTICdNYXgnLCBtaW4oa2VudGlrLnBpbmcuTWluUnR0TXMpIEFTICdNaW4nLCBhdmVyYWdlKGtlbnRpay5waW5nLlN0ZERldlJ0dCkgQVMgJ1N0ZERldicsIGxhdGVzdChrZW50aWsucGluZy5QYWNrZXRMb3NzUGN0KSBBUyAnUGFja2V0IExvc3MgJScgRkFDRVQgZGV2aWNlX25hbWUiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxNDE4LCJjb2x1bW4iOjEsIm9mZnNldCI6MzUxNjl9LCJlbmQiOnsibGluZSI6MTQyMCwiY29sdW1uIjo0LCJvZmZzZXQiOjM1NDI5fSwiaW5kZW50IjpbMSwxXX19"></pre>
+<div data-type="component" data-component="Callout" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ2YXJpYW50IiwidmFsdWUiOiJ0aXAifV0=">
+  <div data-type="prop" data-prop="children">
+    <p>You can use the <code class="notranslate">ping_only</code> attribute in replacement of the <code class="notranslate">flow_only</code> attribute if you would like to collect RTT metrics from a flow device. If both <code class="notranslate">ping_only</code> and <code class="notranslate">flow_only</code> are <code class="notranslate">true</code>, the device will be treated as a <code class="notranslate">flow_only</code> device.</p>
+  </div>
+</div>
+<h2>Flow data application mapping</h2>
+<p>By default, flow telemetry is mapped to known applications based on evaluation of the layer 4 port in use on a specific flow conversation. If needed, you can override the default mapping by providing a YAML file during Docker runtime to the <code class="notranslate">-application_map</code> flag. This will allow you to specify application names based on ports you identify.</p>
+<p>Example syntax:</p>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiYXBwbGljYXRpb25zOlxuICAtIHBvcnRzOiBbOTA5MiwgOTA5M11cbiAgICBuYW1lOiBrYWZrYVxuICAtIHBvcnRzOiBbODAsIDgwODBdXG4gICAgbmFtZTogaHR0cFxuICAtIHBvcnRzOiBbNDQzLCA4NDQzXVxuICAgIG5hbWU6IGh0dHBzIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTQzMiwiY29sdW1uIjoxLCJvZmZzZXQiOjM2MTA4fSwiZW5kIjp7ImxpbmUiOjE0NDAsImNvbHVtbiI6NCwib2Zmc2V0IjozNjI0OX0sImluZGVudCI6WzEsMSwxLDEsMSwxLDEsMV19fQ=="></pre>
+<h2>Flow data input filtering</h2>
+<p>By default, flow data containers will collect and process every flow packet they receive. If needed, you can add an inclusion filter to the <code class="notranslate">-nf.source</code> flag that will ignore all traffic not matching the filter you provide.</p>
+<p>Syntax: <code class="notranslate">--filters $TYPE,$FIELD,$FUNCTION,$MATCH</code></p>
+<table data-type="component">
+  <thead data-type="component">
+    <tr data-type="component">
+      <th data-type="component" data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTQ1MSwiY29sdW1uIjoxNywib2Zmc2V0IjozNjYwMH0sImVuZCI6eyJsaW5lIjoxNDUxLCJjb2x1bW4iOjM3LCJvZmZzZXQiOjM2NjIwfX19fV0=">
+        <p>Argument Name</p>
+      </th>
+      <th data-type="component">
+        <p>Required</p>
+      </th>
+      <th data-type="component">
+        <p>Description</p>
+      </th>
+    </tr>
+  </thead>
+  <tbody data-type="component">
+    <tr data-type="component">
+      <td data-type="component">
+        <p>$TYPE</p>
+      </td>
+      <td data-type="component">
+        <p>✓</p>
+      </td>
+      <td data-type="component">
+        <p>The type of filter to apply. Possible values are <code class="notranslate">string</code>, <code class="notranslate">int</code>, and <code class="notranslate">addr</code>.</p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p>$FIELD</p>
+      </td>
+      <td data-type="component">
+        <p>✓</p>
+      </td>
+      <td data-type="component">
+        <p>The name of the field to evaluate the match pattern against.</p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p>$FUNCTION</p>
+      </td>
+      <td data-type="component">
+        <p>✓</p>
+      </td>
+      <td data-type="component">
+        <p>The type of function to use during evaluation. Possible values are <code class="notranslate">Equal: ==</code>, <code class="notranslate">NotEqual: !=</code>, <code class="notranslate">LessThan: &#x3C;</code>, <code class="notranslate">GreaterThan: ></code>, <code class="notranslate">Contains: %</code></p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p>$MATCH</p>
+      </td>
+      <td data-type="component">
+        <p>✓</p>
+      </td>
+      <td data-type="component">
+        <p>The value to be used as a match pattern.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3>Example Filters</h3>
+<ul>
+  <li>Only collect flow data from source addresses in the <code class="notranslate">10.0.0.0/24</code> CIDR range</li>
+</ul>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjpudWxsLCJtZXRhIjpudWxsLCJ2YWx1ZSI6Ii1uZi5zb3VyY2Ugc2Zsb3cgLS1maWx0ZXJzIGFkZHIsc3JjX2FkZHIsJSwxMC4xMC4wLjAvMjQiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxNTI4LCJjb2x1bW4iOjEsIm9mZnNldCI6Mzc3MTV9LCJlbmQiOnsibGluZSI6MTUzMCwiY29sdW1uIjo0LCJvZmZzZXQiOjM3Nzc4fSwiaW5kZW50IjpbMSwxXX19"></pre>
+<ul>
+  <li>Only collect flow data where the destination port is not equal to <code class="notranslate">8531</code></li>
+</ul>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjpudWxsLCJtZXRhIjpudWxsLCJ2YWx1ZSI6Ii1uZi5zb3VyY2UgbmV0ZmxvdzUgLS1maWx0ZXJzIGludCxsNF9kc3RfcG9ydCwhPSw4NTMxIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTUzNCwiY29sdW1uIjoxLCJvZmZzZXQiOjM3ODU2fSwiZW5kIjp7ImxpbmUiOjE1MzYsImNvbHVtbiI6NCwib2Zmc2V0IjozNzkxN30sImluZGVudCI6WzEsMV19fQ=="></pre>
+<p><em>You can also add multiple filters together with an inherited <code class="notranslate">AND</code> operator</em></p>
+<ul>
+  <li>Only collect flow data from source addresses in the <code class="notranslate">10.0.0.0/24</code> CIDR range AND where the destination port is not equal to <code class="notranslate">8531</code></li>
+</ul>
+<pre data-type="component" data-component="CodeBlock" data-props="eyJsYW5nIjpudWxsLCJtZXRhIjpudWxsLCJ2YWx1ZSI6Ii0tZmlsdGVycyBhZGRyLHNyY19hZGRyLCUsMTAuMC4wLjAvMjQgLS1maWx0ZXJzIGludCxsNF9kc3RfcG9ydCwhPSw4NTMxIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTU0MiwiY29sdW1uIjoxLCJvZmZzZXQiOjM4MTMyfSwiZW5kIjp7ImxpbmUiOjE1NDQsImNvbHVtbiI6NCwib2Zmc2V0IjozODIxMX0sImluZGVudCI6WzEsMV19fQ=="></pre>

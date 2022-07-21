@@ -1,0 +1,1144 @@
+<div data-type="frontmatter"
+  data-value="eyJ0aXRsZSI6IkFkdmFuY2VkIGNvbmZpZ3VyYXRpb24gZm9yIG5ldHdvcmsgbW9uaXRvcmluZyIsInRhZ3MiOlsiSW50ZWdyYXRpb25zIiwiTmV0d29yayBtb25pdG9yaW5nIiwiQWR2YW5jZWQgY29uZmlndXJhdGlvbiJdLCJtZXRhRGVzY3JpcHRpb24iOiJBZHZhbmNlZCBjb25maWd1cmF0aW9uIG9wdGlvbnMgZm9yIG5ldHdvcmsgbW9uaXRvcmluZyIsInJlZGlyZWN0cyI6WyIvZG9jcy9uZXR3b3JrLXBlcmZvcm1hbmNlLW1vbml0b3Jpbmcvc2V0dXAtcGVyZm9ybWFuY2UtbW9uaXRvcmluZy9hZHZhbmNlZC1jb25maWcvIl19">
+  <div data-key="title">ネットワーク監視の高度な構成</div>
+</div>
+<p>ネットワークパフォーマンスの監視を構成するときに使用できるすべてのオプションを調べたい場合は、次のセクションを参照してください。</p>
+<h2 id="snmp-base-yml-template">SNMPベースのYAMLサンプルファイル</h2>
+<p>これは、SNMPおよびフローデータデバイスをポーリングするために<strong>ktranslatedocker</strong>イメージによって使用される<code
+    class="notranslate">snmp-base.yaml</code>ファイルで使用可能なさまざまな構成オプションの例です。また<a
+    href="https://github.com/kentik/ktranslate/blob/main/config/snmp.yaml.sample">、GitHubのktranslateリポジトリで</a>コメントの多いサンプルを見ることができます。
+</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgIyBTYW1wbGUgb2YgU05NUCB2MmMgZGV2aWNlXG4gIHVwc19zbm1wdjJjX18xMC4xMC4wLjIwMTpcbiAgICBkZXZpY2VfbmFtZTogdXBzX3NubXB2MmNcbiAgICBkZXZpY2VfaXA6IDEwLjEwLjAuMjAxXG4gICAgc25tcF9jb21tOiBwdWJsaWNcbiAgICBvaWQ6IC4xLjMuNi4xLjQuMS4zMTguMS4zLjI3XG4gICAgZGVzY3JpcHRpb246IFwiQVBDIFdlYi9TTk1QIE1hbmFnZW1lbnQgQ2FyZCAoTUI6djQuMS4wIFBGOnY2LjIuMSBQTjphcGNfaHcwNV9hb3NfNjIxLmJpbiBBRjE6djYuMi4xIEFOMTphcGNfaHcwNV9zdW14XzYyMS5iaW4gTU46QVA5NTM3U1VNIEhSOjA1IFNOOiBBQkMxMjNERUY0NTYgTUQ6MDUvMjEvMjAxNikgKEVtYmVkZGVkIFBvd2VyTmV0IFNOTVAgQWdlbnQgU1cgdjIuMiBjb21wYXRpYmxlKVwiXG4gICAgbGFzdF9jaGVja2VkOiAyMDIxLTExLTA5VDE4OjE0OjU5LjkwNzgyMTQ4OVpcbiAgICBtaWJfcHJvZmlsZTogYXBjX3Vwcy55bWxcbiAgICBwcm92aWRlcjoga2VudGlrLXVwc1xuICAgIHBvbGxfdGltZV9zZWM6IDMwMFxuICAgIHJldHJpZXM6IDFcbiAgICB0aW1lb3V0X21zOiA1MDAwXG4gICAgdXNlcl90YWdzOlxuICAgICAgb3duaW5nX3RlYW06IGRjX29wc1xuICAgIGRpc2NvdmVyZWRfbWliczpcbiAgICAtIFBvd2VyTmV0LU1JQl9VUFNcbiAgICAtIFRDUC1NSUJcbiAgICAtIFVEUC1NSUJcbiAgIyBTYW1wbGUgb2YgU05NUCB2MyBkZXZpY2VcbiAgcm91dGVyX3NubXB2M19fMTAuMTAuMC4yMDI6XG4gICAgZGV2aWNlX25hbWU6IHJvdXRlcl9zbm1wdjNcbiAgICBkZXZpY2VfaXA6IDEwLjEwLjAuMjAyXG4gICAgc25tcF92MzpcbiAgICAgIHVzZXJfbmFtZTogdXNlck5hbWV2M1xuICAgICAgYXV0aGVudGljYXRpb25fcHJvdG9jb2w6IE1ENVxuICAgICAgYXV0aGVudGljYXRpb25fcGFzc3BocmFzZTogYXV0aFBhc3NQcml2YWN5XG4gICAgICBwcml2YWN5X3Byb3RvY29sOiBBRVMyNTZcbiAgICAgIHByaXZhY3lfcGFzc3BocmFzZTogcGFzc1ByaXZhY3lcbiAgICBvaWQ6IC4xLjMuNi4xLjQuMS45LjEuNTQ0XG4gICAgZGVzY3JpcHRpb246IFwiQ2lzY28gSU9TIFNvZnR3YXJlLCAzODAwIFNvZnR3YXJlIChDMzg0NS1BRFZFTlRFUlBSSVNFSzktTSksIFZlcnNpb25cbiAgICAgIDE1LjEoMylUNCwgUkVMRUFTRSBTT0ZUV0FSRSAoZmMxKVxcclxcblRlY2huaWNhbCBTdXBwb3J0OiBodHRwOi8vd3d3LmNpc2NvLmNvbS90ZWNoc3VwcG9ydFxcclxcbkNvcHlyaWdodFxuICAgICAgKGMpIDE5ODYtMjAxMiBieSBDaXNjbyBTeXN0ZW1zLCBJbmMuXFxyXFxuQ29tcGlsZWQgVGh1IDI0LU1heS0xMiAwNDoyNyBieSBwcm9kX3JlbF90ZWFtXCJcbiAgICBsYXN0X2NoZWNrZWQ6IDIwMjEtMTEtMDlUMTg6MTQ6NTkuOTA3ODIxNDg5WlxuICAgIG1pYl9wcm9maWxlOiBjaXNjby1hc3IueW1sXG4gICAgcHJvdmlkZXI6IGtlbnRpay1yb3V0ZXJcbiAgICB1c2VyX3RhZ3M6XG4gICAgICBvd25pbmdfdGVhbTogY29yZS1uZXR3b3JraW5nXG4gICAgZGlzY292ZXJlZF9taWJzOlxuICAgIC0gQkdQNC1NSUJcbiAgICAtIENJU0NPLU1FTU9SWS1QT09MLU1JQlxuICAgIC0gQ0lTQ08tUFJPQ0VTUy1NSUJcbiAgICAtIElGLU1JQlxuICAgIC0gT1NQRi1NSUJcbiAgICBlbmdpbmVfaWQ6IFwiODA6MDA6MDE6MDE6MGE6MTQ6MWU6MjhcIlxuICAgIG1hdGNoX2F0dHJpYnV0ZXM6XG4gICAgICBpZl9pbnRlcmZhY2VfbmFtZTogXCJeVGVuLip8XkdpZy4qXCJcbiAgICAgIFwiIWlmX0FsaWFzXCI6IFwiW1V1XXBsaW5rXCJcbiAgIyBTYW1wbGUgb2YgU05NUCB2MSBkZXZpY2VcbiAgbmV0Ym90el9zbm1wdjFfXzEwLjEwLjAuMjAzOlxuICAgIGRldmljZV9uYW1lOiBuZXRib3R6X3NubXB2MVxuICAgIGRldmljZV9pcDogMTAuMTAuMC4yMDFcbiAgICBzbm1wX2NvbW06IHB1YmxpY1xuICAgIHVzZV9zbm1wX3YxOiB0cnVlXG4gICAgb2lkOiAuMS4zLjYuMS40LjEuNTUyOC4xMDAuMjAuMTAuMjAxM1xuICAgIGRlc2NyaXB0aW9uOiBcIkxpbnV4IG5ldGJvdHo5MzBBN0EgMi42LjEyICMzMDcgV2VkIERlYyAyOSAxNToyNTozMiBFU1QgMjAxMCBwcGNcIlxuICAgIGxhc3RfY2hlY2tlZDogMjAyMS0xMS0wOVQxODoxNDo1OS45MDc4MjE0ODlaXG4gICAgbWliX3Byb2ZpbGU6IGFwYy1uZXRib3R6LnltbFxuICAgIHByb3ZpZGVyOiBrZW50aWstbmV0Ym90elxuICAgIHVzZXJfdGFnczpcbiAgICAgIG93bmluZ190ZWFtOiBzeXNfb3BzXG4gICAgZGlzY292ZXJlZF9taWJzOlxuICAgIC0gSUYtTUlCXG4gICAgLSBJUC1NSUJcbiAgICAtIFRDUC1NSUJcbiAgICAtIFVEUC1NSUJcbiAgICBub191c2VfYnVsa3dhbGthbGw6IHRydWVcbiAgIyBTYW1wbGUgb2YgXCJmbG93IG9ubHlcIiBkZXZpY2VcbiAgZmxvd19vbmx5X18xMC4xMC4wLjIxMDpcbiAgICBkZXZpY2VfbmFtZTogZmxvd19vbmx5XG4gICAgZGV2aWNlX2lwOiAxMC4xMC4wLjIxMFxuICAgIHVzZXJfdGFnczpcbiAgICAgIG93bmluZ190ZWFtOiBuZXRfZW5nXG4gICAgZmxvd19vbmx5OiB0cnVlXG4gICMgU2FtcGxlIG9mIFwicGluZyBvbmx5XCIgZGV2aWNlXG4gIHBpbmdfb25seV9fMTAuMTAuMC4yMjA6XG4gICAgZGV2aWNlX25hbWU6IHBpbmdfb25seVxuICAgIGRldmljZV9pcDogMTAuMTAuMC4yMjBcbiAgICB1c2VyX3RhZ3M6XG4gICAgICBvd25pbmdfdGVhbTogbG9hZF9iYWxhbmNpbmdcbiAgICBwaW5nX29ubHk6IHRydWVcbiAgICBwaW5nX2ludGVydmFsX3NlYzogNVxuICAjIFNhbXBsZSBvZiBBcmlzdGEgZUFQSSBkZXZpY2VcbiAgYXJpc3RhX2VhcGlfMTAuMTAuMC4yMzA6XG4gICAgZGV2aWNlX25hbWU6IGFyaXN0YV9lYXBpXG4gICAgZGV2aWNlX2lwOiAxMC4xMC4wLjIzMFxuICAgIHNubXBfY29tbTogcHVibGljXG4gICAgb2lkOiAuMS4zLjYuMS40LjEuMzAwNjUuMS4zMDExLjcwMjAuMzczNS4yNC4yODc4LjJcbiAgICBkZXNjcmlwdGlvbjogXCJBcmlzdGEgTmV0d29ya3MgRU9TIHZlcnNpb24gNC4yMi45TSBydW5uaW5nIG9uIGFuIEFyaXN0YVxuICAgICAgTmV0d29ya3MgRENTLTcwMjBTUi0yNEMyXCJcbiAgICBsYXN0X2NoZWNrZWQ6IDIwMjEtMTEtMDlUMTg6MTQ6NTkuOTA3ODIxNDg5WlxuICAgIG1pYl9wcm9maWxlOiBhcmlzdGEtc3dpdGNoLnltbFxuICAgIHByb3ZpZGVyOiBrZW50aWstc3dpdGNoXG4gICAgZGlzY292ZXJlZF9taWJzOlxuICAgIC0gQVJJU1RBLUJHUDRWMi1NSUJcbiAgICAtIEFSSVNUQS1RVUVVRS1NSUJcbiAgICAtIEJHUDQtTUlCXG4gICAgLSBIT1NULVJFU09VUkNFUy1NSUJcbiAgICAtIElGLU1JQlxuICAgIGV4dDpcbiAgICAgIGVhcGlfY29uZmlnOlxuICAgICAgICB1c2VybmFtZTogdXNlcm5hbWVBUElcbiAgICAgICAgcGFzc3dvcmQ6IHBhc3N3b3JkQVBJXG4gICAgICAgIHRyYW5zcG9ydDogaHR0cHNcbiAgICAgICAgcG9ydDogNDQzXG50cmFwOlxuICBsaXN0ZW46IDEyNy4wLjAuMToxNjIwXG4gIGNvbW11bml0eTogcHVibGljXG4gIHZlcnNpb246IFwiXCJcbiAgdHJhbnNwb3J0OiBcIlwiXG4gIHYzX2NvbmZpZzogbnVsbFxuZGlzY292ZXJ5OlxuICBjaWRyczpcbiAgLSAxMC4wLjAuMC8yNFxuICAtIDEwLjAuMC4yMDIvMzJcbiAgaWdub3JlX2xpc3Q6XG4gIC0gMTAuMC4wLjk4XG4gIC0gMTAuMC4wLjk5XG4gIGRlYnVnOiBmYWxzZVxuICBwb3J0czpcbiAgLSAxNjFcbiAgLSAxMTYxXG4gIGRlZmF1bHRfY29tbXVuaXRpZXM6XG4gIC0gcHVibGljXG4gIC0gcHVibGljMTIzXG4gIC0gUHVibCFjQUJDXG4gIHVzZV9zbm1wX3YxOiBmYWxzZVxuICBkZWZhdWx0X3YzOiBudWxsXG4gIGFkZF9taWJzOiB0cnVlXG4gIHRocmVhZHM6IDRcbiAgYWRkX2RldmljZXM6IHRydWVcbiAgcmVwbGFjZV9kZXZpY2VzOiB0cnVlXG4gIG5vX2RlZHVwX2VuZ2luZV9pZDogZmFsc2VcbiAgY2hlY2tfYWxsX2lwczogZmFsc2Vcbmdsb2JhbDpcbiAgcG9sbF90aW1lX3NlYzogNjBcbiAgZHJvcF9pZl9vdXRzaWRlX3BvbGw6IGZhbHNlXG4gIG1pYl9wcm9maWxlX2RpcjogL2V0Yy9rdHJhbnNsYXRlL3Byb2ZpbGVzXG4gIG1pYnNfZGI6IC9ldGMva3RyYW5zbGF0ZS9taWJzLmRiXG4gIG1pYnNfZW5hYmxlZDpcbiAgLSBBUklTVEEtQkdQNFYyLU1JQlxuICAtIEFSSVNUQS1RVUVVRS1NSUJcbiAgLSBCR1A0LU1JQlxuICAtIENJU0NPLU1FTU9SWS1QT09MLU1JQlxuICAtIENJU0NPLVBST0NFU1MtTUlCXG4gIC0gSE9TVC1SRVNPVVJDRVMtTUlCXG4gIC0gSUYtTUlCXG4gIC0gT1NQRi1NSUJcbiAgLSBQb3dlck5ldC1NSUJfVVBTXG4gIHRpbWVvdXRfbXM6IDMwMDBcbiAgcmV0cmllczogMFxuICBnbG9iYWxfdjM6IG51bGxcbiAgcmVzcG9uc2VfdGltZTogZmFsc2VcbiAgdXNlcl90YWdzOlxuICAgIGVudmlyb25tZW50OiBwcm9kdWN0aW9uXG4gIG1hdGNoX2F0dHJpYnV0ZXM6XG4gICAgaWZfRGVzY3JpcHRpb246IFwiLipXQU4uKlwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTgsImNvbHVtbiI6MSwib2Zmc2V0Ijo4MzV9LCJlbmQiOnsibGluZSI6MTc3LCJjb2x1bW4iOjQsIm9mZnNldCI6NTExM30sImluZGVudCI6WzEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxXX19"></pre>
+<div data-type="component" data-component="CollapserGroup">
+  <div data-type="prop" data-prop="children">
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiZGV2aWNlcyJ9LHsidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ0aXRsZSIsInZhbHVlIjoiRGV2aWNlcyBzZWN0aW9uIn1d">
+      <div data-type="prop" data-prop="title">デバイスセクション</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component"
+                data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTg3LCJjb2x1bW4iOjIxLCJvZmZzZXQiOjUyNTN9LCJlbmQiOnsibGluZSI6MTg3LCJjb2x1bW4iOjQxLCJvZmZzZXQiOjUyNzN9fX19XQ==">
+                <p>キー名</p>
+              </th>
+              <th data-type="component">
+                <p>必須</p>
+              </th>
+              <th data-type="component">
+                <p>説明</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>device_name</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>デバイスの名前。これは、NewRelic内のデバイスの一意の識別子です。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>device_ip</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>デバイスのターゲットIP。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>snmp_comm</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPv1 / 2cに必要）</p>
+              </td>
+              <td data-type="component">
+                <p><code class="notranslate">SNMPv1/2c</code> 使用するコミュニティ文字列。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>use_snmp_v1</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPv1に必要）</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPv1を使用するかどうかを示します。デフォルトでは、 <code class="notranslate">false</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>snmp_v3</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPv3に必要）</p>
+              </td>
+              <td data-type="component">
+                <p><a href="#snmpv3-config">SNMPv3構成</a></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>debug</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPポーリング中にデバッグレベルのログを有効にするかどうかを示します。デフォルトでは、 <code class="notranslate">false</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>port</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPクエリを送信するポート。デフォルトでは、ポート<code class="notranslate">161</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>oid</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPポーリングに必要）</p>
+              </td>
+              <td data-type="component">
+                <p>デバイスで検出された<code class="notranslate">systemObjectID | sysObjectID | sysOID</code>
+                  。これは、デバイスを既知のSNMPプロファイルに一致させ、 <code
+                    class="notranslate">provider</code>属性を設定するために使用されます。一致するものが見つからない場合、これにより<code
+                    class="notranslate">provider</code>が<a
+                    href="/docs/network-performance-monitoring/troubleshooting/snmp-discovery-kentik-default">kentik-default</a>デバイスとして設定されます。
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>description</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>デバイスの検出された<code class="notranslate">sysDescr</code> 。このフィールドは情報です。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>last_checked</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>このデバイスが<code class="notranslate">ktranslate</code> dockerイメージによって最後に検出されたときのタイムスタンプ。このフィールドは情報です。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>mib_profile</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPポーリングに必要）</p>
+              </td>
+              <td data-type="component">
+                <p><code
+                    class="notranslate">sysOID</code>に基づいて検出実行中にこのデバイスに関連付けられたSNMPプロファイルファイル。<strong>これがバング（！）トークンで始まる場合、
+                    <code class="notranslate">sysOID</code>からの自動マッチングをオーバーライドし、手動オーバーライドを使用します。</strong>例： <code
+                    class="notranslate">"!cisco-asa.yml"</code> （引用符が必要です）。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>provider</p>
+              </td>
+              <td data-type="component">
+                <p>✓（New Relicに必要）</p>
+              </td>
+              <td data-type="component">
+                <p>NewRelicのエンティティ合成中に使用される値。これは、一致した<code
+                    class="notranslate">mib_profile</code>に基づいて自動的に作成され、エンティティを作成するには、 <a
+                    href="https://github.com/newrelic/entity-definitions/search?q=%22attribute%3A+provider%22+filename%3Adefinition.yml">entity-definitions</a>リポジトリ内のルールの1つと一致する必要があります。デバイスを手動で追加する場合は、この値が有効であることを確認するように注意する必要があります。
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>poll_time_sec</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPポーリング頻度を秒単位で示します。この設定は、 <code class="notranslate">global.poll_time_sec</code>属性を上書きするために使用されます。
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>retries</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPOIDのポーリングを再試行する試行回数を示します。この設定は、 <code class="notranslate">global.retries</code>属性を上書きするために使用されます。
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>timeout_ms</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPポーリングタイムアウトをミリ秒単位で示します。この設定は、 <code
+                    class="notranslate">global.timeout_ms</code>属性を上書きするために使用されます。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>user_tags</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">key:value</code> 属性をペアにして、デバイスにより多くのコンテキストを提供します。このレベルのタグは、 <code
+                    class="notranslate">global.user_tags</code>属性で適用されるすべてのタグに追加されます。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>discovered_mibs</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>このデバイスが応答できる、一致した<code class="notranslate">mib_profile</code>からプルされたMIBのリスト。このフィールドは情報です。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>engine_id</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>このデバイスのSNMPエージェントに対して検出された一意のエンジンID。通常、SNMPv3の検出中に検出されます。このフィールドは情報です。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>match_attributes</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">attribute:regex</code> ペアを使用して、メトリックを許可リストに追加します。このレベルのペアは、 <code
+                    class="notranslate">global.match_attributes</code>属性で適用されるすべてのペアに追加されます。<a
+                    href="https://github.com/google/re2/wiki/Syntax">RE2</a>構文を使用し、デフォルトの<code
+                    class="notranslate">OR</code>演算子があります。キーの前に<code class="notranslate">!</code>を付けて、 <code
+                    class="notranslate">AND</code>演算子を強制します。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>monitor_admin_shut</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">Administratively Shutdown</code>ステータスのインターフェースを監視するかどうかを示します。デフォルトでは、 <code
+                    class="notranslate">false</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>no_use_bulkwalkall</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">true</code>の場合、SNMP <code
+                    class="notranslate">GETBULK</code>要求アクションを無効にします。デフォルトでは、 <code
+                    class="notranslate">false</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>response_time</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>このデバイスで<a href="#response_time-attribute">応答時間</a>ポーリングが有効になっているかどうかを示します。デフォルトでは、 <code
+                    class="notranslate">false</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ping_only</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>すべてのSNMPポーリングを無効にし、 <code class="notranslate">true</code>の場合にこのデバイスの<a
+                    href="#response_time-attribute">応答時間</a>ポーリングを有効にします。この設定は、 <code
+                    class="notranslate">global.response_time</code>属性を上書きします。デフォルトでは、 <code
+                    class="notranslate">false</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ping_interval_sec</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>この設定は、 <code class="notranslate">ping_only</code> |の間に使用される1パケット/秒のデフォルトレートを上書きするために使用されます。 <code
+                    class="notranslate">response_time</code>ポーリング。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>flow_only</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">true</code>の場合、すべてのSNMPポーリングを無効にします。デフォルトでは、 <code
+                    class="notranslate">false</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ext</p>
+              </td>
+              <td data-type="component">
+                <p>✓（APIポーリングに必要）</p>
+              </td>
+              <td data-type="component">
+                <p><a href="#api-polling-config">APIポーリング構成</a></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoidHJhcCJ9LHsidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ0aXRsZSIsInZhbHVlIjoiVHJhcCBzZWN0aW9uIn1d">
+      <div data-type="prop" data-prop="title">トラップセクション</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component"
+                data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6NTQyLCJjb2x1bW4iOjIxLCJvZmZzZXQiOjEzMjUxfSwiZW5kIjp7ImxpbmUiOjU0MiwiY29sdW1uIjo0MSwib2Zmc2V0IjoxMzI3MX19fX1d">
+                <p>キー名</p>
+              </th>
+              <th data-type="component">
+                <p>必須</p>
+              </th>
+              <th data-type="component">
+                <p>説明</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>listen</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPトラップを受信するためのリスニングIPポート。デフォルトでは、 <code
+                    class="notranslate">127.0.0.1:1620</code>に設定されています。SNMPトラップのデフォルトの<code
+                    class="notranslate">162</code>を使用するには、実行コマンドの<code class="notranslate">--net=host</code>を<code
+                    class="notranslate">-p 162:1620/udp</code>に置き換える必要があります。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>community</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPトラップを受信するためのSNMPv1/v2cコミュニティストリング。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>version</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>使用するSNMPバージョン。オプションは、 <code class="notranslate">v1</code> 、 <code class="notranslate">v2c</code>
+                  、および<code class="notranslate">v3</code>です。デフォルトでは、 <code class="notranslate">v2c</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>transport</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>使用するSNMPトランスポートプロトコル。オプションは<code class="notranslate">TCP</code>と<code
+                    class="notranslate">UDP</code>です。デフォルトでは、 <code class="notranslate">UDP</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>v3_config</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>使用する<a href="#snmpv3-config">SNMPv3構成</a>。<code class="notranslate">version: v3</code>の場合にのみ使用されます。
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiZGlzY292ZXJ5In0seyJ0eXBlIjoibWR4QXR0cmlidXRlIiwibmFtZSI6InRpdGxlIiwidmFsdWUiOiJEaXNjb3Zlcnkgc2VjdGlvbiJ9XQ==">
+      <div data-type="prop" data-prop="title">ディスカバリーセクション</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component"
+                data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6NjI5LCJjb2x1bW4iOjIxLCJvZmZzZXQiOjE0ODY0fSwiZW5kIjp7ImxpbmUiOjYyOSwiY29sdW1uIjo0MSwib2Zmc2V0IjoxNDg4NH19fX1d">
+                <p>キー名</p>
+              </th>
+              <th data-type="component">
+                <p>必須</p>
+              </th>
+              <th data-type="component">
+                <p>説明</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>cidrs</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p><a
+                    href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation">CIDR表記</a>のターゲットIP範囲の配列。
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ignore_list</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>すべての検出ジョブで明示的に無視するIPアドレスの配列。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>debug</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>検出中にデバッグレベルのログを有効にするかどうかを示します。デフォルトでは、 <code class="notranslate">false</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>ports</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPポーリング中にスキャンするターゲットポートの配列。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>default_communities</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPv1 / 2cに必要）</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPポーリング中にスキャンするSNMPv1/v2cコミュニティストリングの配列。この配列は順番に評価され、検出は最初に通過するコミュニティを受け入れます。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>use_snmp_v1</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPv1に必要）</p>
+              </td>
+              <td data-type="component">
+                <p>検出中にSNMPv1を使用するかどうかを示します。デフォルトでは、 <code class="notranslate">false</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>default_v3</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPv3に必要）</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPポーリング中にスキャンする単一の<a href="#snmpv3-config">SNMPv3構成</a>。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>other_v3s</p>
+              </td>
+              <td data-type="component">
+                <p>✓（SNMPv3に必要）</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPポーリング中にスキャンする複数の<a href="#snmpv3-config">SNMPv3構成</a>。<strong>このオプションまたは<code
+                      class="notranslate">default_v3</code>を使用します。両方ではありません</strong></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>add_devices</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>検出されたデバイスを<code class="notranslate">snmp-base.yaml</code>ファイルの<code
+                    class="notranslate">devices</code>セクションに追加するかどうかを示します。デフォルトでは、 <code
+                    class="notranslate">true</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>add_mibs</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>検出されたMIBを<code class="notranslate">snmp-base.yaml</code>ファイルの<code
+                    class="notranslate">global.mibs_enabled</code>セクションに追加するかどうかを示します。デフォルトでは、 <code
+                    class="notranslate">true</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>threads</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>検出中に使用するスレッドの整数制限。コンテナで使用可能なコアの数よりも少なくする必要があります。デフォルトでは、 <code class="notranslate">4</code>に設定されています。
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>replace_devices</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>検出されたデバイスが<code class="notranslate">snmp-base.yaml</code>ファイルの<code
+                    class="notranslate">devices</code>セクションにすでに存在する場合、それらを置き換えるかどうかを示します。デフォルトでは、 <code
+                    class="notranslate">true</code>に設定されています。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>no_dedup_engine_id</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code
+                    class="notranslate">true</code>に設定すると、報告されたSNMPエンジンIDに基づいて、検出されたデバイスが同じデバイスであると思われる場合に、それらのデバイスの重複排除を無効にします。デフォルトでは、
+                  <code class="notranslate">false</code>
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>check_all_ips</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">true</code>に設定すると、TCPポートスキャンを介して最初に活気をチェックせずに、検出ジョブが<code
+                    class="notranslate">cidrs</code>アレイのすべてのターゲットIPアドレスに対してSNMP接続を試行するように強制します。この設定は検出ジョブの速度を低下させますが、
+                  <code class="notranslate">/32</code>オーバーライドを使用して<code
+                    class="notranslate">cidrs</code>アレイにリストされていないデバイスに対して検出が失敗する問題を回避するのに役立ちます。デフォルトでは、 <code
+                    class="notranslate">false</code>
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiZ2xvYmFsIn0seyJ0eXBlIjoibWR4QXR0cmlidXRlIiwibmFtZSI6InRpdGxlIiwidmFsdWUiOiJHbG9iYWwgc2VjdGlvbiJ9XQ==">
+      <div data-type="prop" data-prop="title">グローバルセクション</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component"
+                data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6ODQ0LCJjb2x1bW4iOjIxLCJvZmZzZXQiOjE5NTg3fSwiZW5kIjp7ImxpbmUiOjg0NCwiY29sdW1uIjo0MSwib2Zmc2V0IjoxOTYwN319fX1d">
+                <p>キー名</p>
+              </th>
+              <th data-type="component">
+                <p>必須</p>
+              </th>
+              <th data-type="component">
+                <p>説明</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>poll_time_sec</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>デバイスをポーリングする時間（秒単位）。これは、 <code
+                    class="notranslate">devices.&#x3C;deviceName>.poll_time_sec</code>属性を使用してデバイスごとにオーバーライドできます。デフォルトでは、
+                  <code class="notranslate">60</code>に設定されています。
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>drop_if_outside_poll</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>ポーリングに<code
+                    class="notranslate">poll_time_sec</code>で設定された値よりも時間がかかる場合に、このサイクルからすべての値を削除するかどうかを示します。デフォルトでは、
+                  <code class="notranslate">false</code>
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>mib_profile_dir</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>キュレートされたMIBプロファイルを見つけるためのディレクトリ。これらは、Kentikの<a
+                    href="https://github.com/kentik/snmp-profiles">snmp-profiles</a>リポジトリから自動的に<code
+                    class="notranslate">ktranslate</code>イメージにプルされ、Dockerランタイムで、プロファイルの独自のローカルディレクトリのボリュームマウントを作成することでオーバーライドできます。
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>mibs_db</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component"></td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>mibs_enabled</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p><code class="notranslate">ktranslate</code> dockerイメージがポーリングするすべてのアクティブなMIBの配列。<code
+                    class="notranslate">discovery_add_mibs</code>属性が<code
+                    class="notranslate">true</code>の場合、このリストは検出中に自動的に生成されます。ここにリストされていないMIBは、構成ファイル内のどのデバイスでもポーリングされません。<code
+                    class="notranslate">MIB-NAME.tableName</code>構文を使用して、MIBファイルでSNMPテーブルを直接指定できます。例： <code
+                    class="notranslate">HOST-RESOURCES-MIB.hrProcessorTable</code> 。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>timeout_ms</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>ミリ秒単位の時間SNMPクエリのタイムアウト。これは、 <code
+                    class="notranslate">devices.&#x3C;deviceName>.timeout_ms</code>属性を使用してデバイスごとにオーバーライドできます。デフォルトでは、
+                  <code class="notranslate">5000</code>
+                </p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>retries</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>失敗したSNMPポーリングの再試行回数。これは、 <code
+                    class="notranslate">devices.&#x3C;deviceName>.retries</code>属性を使用してデバイスごとにオーバーライドできます。デフォルトでは、 <code
+                    class="notranslate">0</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>user_tags</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">key:value</code>
+                  属性をペアにして、デバイスにより多くのコンテキストを提供します。このレベルのタグは、構成ファイル内のすべてのデバイスに適用されます。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>match_attributes</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p><code class="notranslate">attribute:regex</code>
+                  ペアを使用して、メトリックを許可リストに追加します。このレベルのペアは、構成ファイル内のすべてのデバイスと照合されます。<a
+                    href="https://github.com/google/re2/wiki/Syntax">RE2</a>構文を使用し、デフォルトの<code
+                    class="notranslate">OR</code>演算子があります。キーの前に<code class="notranslate">!</code>を付けて、強制的に<code
+                    class="notranslate">AND</code>演算子にします。</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>response_time</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>構成ファイル内のすべてのデバイス<a href="#response_time-attribute">に対して応答時間</a>ポーリングが有効になっているかどうかを示します。デフォルトでは、 <code
+                    class="notranslate">false</code>に設定されています。</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoic25tcHYzLWNvbmZpZyJ9LHsidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ0aXRsZSIsInZhbHVlIjoiT3B0aW9uYWwgU05NUHYzIGNvbmZpZ3VyYXRpb24ifV0=">
+      <div data-type="prop" data-prop="title">オプションのSNMPv3構成</div>
+      <div data-type="prop" data-prop="children">
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component"
+                data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6OTk1LCJjb2x1bW4iOjIxLCJvZmZzZXQiOjIzMzk2fSwiZW5kIjp7ImxpbmUiOjk5NSwiY29sdW1uIjo0MSwib2Zmc2V0IjoyMzQxNn19fX1d">
+                <p>キー名</p>
+              </th>
+              <th data-type="component">
+                <p>必須</p>
+              </th>
+              <th data-type="component">
+                <p>説明</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">
+                <p>user_name</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPv3認証のユーザー名</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>authentication_protocol</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPv3認証プロトコル。可能な値は、 <code class="notranslate">NoAuth</code> 、 <code class="notranslate">MD5</code>
+                  、または <code class="notranslate">SHA</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>authentication_passphrase</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv3認証パスフレーズ</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>privacy_protocol</p>
+              </td>
+              <td data-type="component">
+                <p>✓✓</p>
+              </td>
+              <td data-type="component">
+                <p>SNMPv3プライバシープロトコル。可能な値は、 <code class="notranslate">AuthNoPriv</code> 、 <code
+                    class="notranslate">DES</code> 、 <code class="notranslate">AES</code> 、 <code
+                    class="notranslate">AES192</code> 、 <code class="notranslate">AES256</code> 、 <code
+                    class="notranslate">AES192C</code> 、または <code class="notranslate">AES256C</code></p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>privacy_passphrase</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv3プライバシーパスフレーズ</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>context_engine_id</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv3コンテキストエンジンID</p>
+              </td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">
+                <p>context_name</p>
+              </td>
+              <td data-type="component"></td>
+              <td data-type="component">
+                <p>SNMPv3コンテキスト名</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div data-type="component" data-component="Callout"
+          data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ2YXJpYW50IiwidmFsdWUiOiJ0aXAifV0=">
+          <div data-type="prop" data-prop="children">
+            <p><code class="notranslate">aws.sm.$SECRET_NAME</code>構文を使用してSNMPv3設定で<a
+                href="https://aws.amazon.com/secrets-manager/">AWSSecretsManager</a>をネイティブに使用できます。必要に応じて<code
+                class="notranslate">$SECRET_NAME</code>を置き換えて、Dockerランタイム中に<strong>ktranslate</strong>がクレデンシャルをプルするようにします。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiYXBpLXBvbGxpbmctY29uZmlnIn0seyJ0eXBlIjoibWR4QXR0cmlidXRlIiwibmFtZSI6InRpdGxlIiwidmFsdWUiOiJPcHRpb25hbCBBUEkgUG9sbGluZyBjb25maWd1cmF0aW9ucyJ9XQ==">
+      <div data-type="prop" data-prop="title">オプションのAPIポーリング構成</div>
+      <div data-type="prop" data-prop="children">
+        <p><strong>Arista eAPI</strong></p>
+        <table data-type="component">
+          <thead data-type="component">
+            <tr data-type="component">
+              <th data-type="component"
+                data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTExNSwiY29sdW1uIjoyMSwib2Zmc2V0IjoyNTYxMH0sImVuZCI6eyJsaW5lIjoxMTE1LCJjb2x1bW4iOjQxLCJvZmZzZXQiOjI1NjMwfX19fV0=">
+                キー名</th>
+              <th data-type="component">必須</th>
+              <th data-type="component">説明</th>
+            </tr>
+          </thead>
+          <tbody data-type="component">
+            <tr data-type="component">
+              <td data-type="component">username</td>
+              <td data-type="component">✓✓</td>
+              <td data-type="component">eAPI認証のユーザー名</td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">password</td>
+              <td data-type="component">✓✓</td>
+              <td data-type="component">eAPI認証用のパスワード</td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">transport</td>
+              <td data-type="component"></td>
+              <td data-type="component">eAPI認証用のトランスポートプロトコル。可能な値は<code class="notranslate">https</code>と <code
+                  class="notranslate">http</code></td>
+            </tr>
+            <tr data-type="component">
+              <td data-type="component">port</td>
+              <td data-type="component">✓✓</td>
+              <td data-type="component">eAPI認証用のTCPポート番号</td>
+            </tr>
+          </tbody>
+        </table>
+        <div data-type="component" data-component="Callout"
+          data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ2YXJpYW50IiwidmFsdWUiOiJ0aXAifV0=">
+          <div data-type="prop" data-prop="children">
+            <p><code class="notranslate">aws.sm.$SECRET_NAME</code>構文を使用してeAPI設定で<a
+                href="https://aws.amazon.com/secrets-manager/">AWSSecretsManager</a>をネイティブに使用できます。必要に応じて<code
+                class="notranslate">$SECRET_NAME</code>を置き換えて、Dockerランタイム中に<strong>ktranslate</strong>がクレデンシャルをプルするようにします。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<h2 id="external-config-files">オプションの外部設定ファイル</h2>
+<p>さまざまな構成と自動化のニーズをサポートするために、Dockerコンテナーにボリュームマウントする外部ファイルを使用して、標準構成ファイルの特定の要素を分離できます。</p>
+<p>これらのファイルの構文は、二重引用符を含めて<code class="notranslate">"@fileName.extension"</code>です。</p>
+<h3>ディスカバリーCIDR</h3>
+<p>例：</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGlzY292ZXJ5OlxuICBjaWRyczogXCJAY2lkcnMueWFtbFwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTE4OSwiY29sdW1uIjoxLCJvZmZzZXQiOjI3Mzk4fSwiZW5kIjp7ImxpbmUiOjExOTIsImNvbHVtbiI6NCwib2Zmc2V0IjoyNzQ0M30sImluZGVudCI6WzEsMSwxXX19"></pre>
+<p>CIDRファイルは、次のようなYAMLリスト構文を使用する必要があります。</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiLSAxMC4xMC4wLjAvMjRcbi0gMTAuMjAuMC4wLzI0XG4tIDE5Mi4xNjguMC4yMS8zMiIsInBvc2l0aW9uIjp7InN0YXJ0Ijp7ImxpbmUiOjExOTYsImNvbHVtbiI6MSwib2Zmc2V0IjoyNzUwMn0sImVuZCI6eyJsaW5lIjoxMjAwLCJjb2x1bW4iOjQsIm9mZnNldCI6Mjc1NjF9LCJpbmRlbnQiOlsxLDEsMSwxXX19"></pre>
+<h3>デバイス</h3>
+<p>例：</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgLSBcIkBuZXRlbmctZGV2aWNlcy55YW1sXCJcbiAgLSBcIkBkYy1vcHMueWFtbFwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTIwNiwiY29sdW1uIjoxLCJvZmZzZXQiOjI3NTg2fSwiZW5kIjp7ImxpbmUiOjEyMTAsImNvbHVtbiI6NCwib2Zmc2V0IjoyNzY1Mn0sImluZGVudCI6WzEsMSwxLDFdfX0="></pre>
+<p>デバイスファイルは、メイン構成ファイルの標準<code class="notranslate">devices</code>セクションと同じ構文を使用する必要がありますが、検出中に生成されるオプションのフィールドは省略されます。
+</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgIyBTYW1wbGUgb2YgU05NUCB2MmMgZGV2aWNlXG4gIHVwc19zbm1wdjJjX18xMC4xMC4wLjIwMTpcbiAgICBkZXZpY2VfbmFtZTogdXBzX3NubXB2MmNcbiAgICBkZXZpY2VfaXA6IDEwLjEwLjAuMjAxXG4gICAgc25tcF9jb21tOiBwdWJsaWNcbiAgICBvaWQ6IC4xLjMuNi4xLjQuMS4zMTguMS4zLjI3XG4gICAgbWliX3Byb2ZpbGU6IGFwY191cHMueW1sXG4gICAgcHJvdmlkZXI6IGtlbnRpay11cHNcbiAgICBwb2xsX3RpbWVfc2VjOiAzMDBcbiAgICByZXRyaWVzOiAxXG4gICAgdGltZW91dF9tczogNTAwMFxuICAgIHVzZXJfdGFnczpcbiAgICAgIG93bmluZ190ZWFtOiBkY19vcHMiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxMjE0LCJjb2x1bW4iOjEsIm9mZnNldCI6Mjc4MjR9LCJlbmQiOnsibGluZSI6MTIyOSwiY29sdW1uIjo0LCJvZmZzZXQiOjI4MTY3fSwiaW5kZW50IjpbMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDFdfX0="></pre>
+<h2 id="snmpv3-aws-secrets">SNMPv3-AWSシークレット</h2>
+<p><strong>ktranslate</strong>には、SNMPv3設定で使用するために<a
+    href="https://aws.amazon.com/secrets-manager/">AWSSecretsManager</a>からキーを取得するためのサポートが組み込まれています。</p>
+<p>この機能を使用するには、次の3つの環境変数を設定し、実行時にそれらをDockerに提供する必要があります。</p>
+<table data-type="component">
+  <thead data-type="component">
+    <tr data-type="component">
+      <th data-type="component"
+        data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTI0MCwiY29sdW1uIjoxNywib2Zmc2V0IjoyODU0M30sImVuZCI6eyJsaW5lIjoxMjQwLCJjb2x1bW4iOjM3LCJvZmZzZXQiOjI4NTYzfX19fV0=">
+        <p>名前</p>
+      </th>
+      <th data-type="component">
+        <p>説明</p>
+      </th>
+    </tr>
+  </thead>
+  <tbody data-type="component">
+    <tr data-type="component">
+      <td data-type="component">
+        <p><a
+            href="https://docs.aws.amazon.com/sdkref/latest/guide/setting-global-aws_access_key_id.html">AWS_ACCESS_KEY_ID</a>
+        </p>
+      </td>
+      <td data-type="component">
+        <p>ユーザーを認証するためのクレデンシャルの一部として使用されるAWSアクセスキーを指定します。</p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p><a
+            href="https://docs.aws.amazon.com/sdkref/latest/guide/setting-global-aws_secret_access_key.html">AWS_SECRET_ACCESS_KEY</a>
+        </p>
+      </td>
+      <td data-type="component">
+        <p>ユーザーを認証するための認証情報の一部として使用されるAWSシークレットキーを指定します。</p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p><a
+            href="https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html#specifying-the-region">AWS_REGION</a>
+        </p>
+      </td>
+      <td data-type="component">
+        <p>このプロファイルを使用してリクエストされたコマンドのリクエストを送信するAWSリージョンを指定します。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>Dockerランタイムの例：</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoic2hlbGwiLCJtZXRhIjpudWxsLCJ2YWx1ZSI6ImRvY2tlciBydW4gLWQgLS1uYW1lIGt0cmFuc2xhdGUtc25tcCAtLXJlc3RhcnQgdW5sZXNzLXN0b3BwZWQgLS1uZXQ9aG9zdCBcXFxuICAtdiBgcHdkYC9zbm1wLWJhc2UueWFtbDovc25tcC1iYXNlLnlhbWwgXFxcbiAgLWUgTkVXX1JFTElDX0FQSV9LRVk9JFlPVVJfTlJfTElDRU5TRV9LRVkgXFxcbiAgLWUgQVdTX0FDQ0VTU19LRVlfSUQ9JFlPVVJfQVdTX0FDQ0VTU19LRVlfSUQgXFxcbiAgLWUgQVdTX1NFQ1JFVF9BQ0NFU1NfS0VZPSRZT1VSX0FXU19TRUNSRVRfQUNDRVNTX0tFWSBcXFxuICAtZSBBV1NfUkVHSU9OPSRZT1VSX0FXU19SRUdJT04gXFxcbiAga2VudGlrL2t0cmFuc2xhdGU6djIgXFxcbiAgICAtc25tcCAvc25tcC1iYXNlLnlhbWwgXFxcbiAgICAtbnJfYWNjb3VudF9pZD0kWU9VUl9OUl9BQ0NPVU5UX0lEIFxcXG4gICAgLWxvZ19sZXZlbD1pbmZvIFxcXG4gICAgLW1ldHJpY3M9amNoZiBcXFxuICAgIC10ZWVfbG9ncz10cnVlIFxcXG4gICAgbnIxLnNubXAiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxMjg1LCJjb2x1bW4iOjEsIm9mZnNldCI6Mjk1NjN9LCJlbmQiOnsibGluZSI6MTI5OSwiY29sdW1uIjo0LCJvZmZzZXQiOjMwMDUxfSwiaW5kZW50IjpbMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxXX19"></pre>
+<p>関連する構成ファイル（ <code class="notranslate">snmp-base.yaml</code> ）;次のようにSNMPv3構成スニペットを更新し、シークレット名の前に<code
+    class="notranslate">aws.sm.</code>を付けます。</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiICBkZWZhdWx0X3YzOlxuICAgIHVzZXJfbmFtZTogYXdzLnNtLlNFQ1JFVF9OQU1FXzFcbiAgICBhdXRoZW50aWNhdGlvbl9wcm90b2NvbDogTUQ1XG4gICAgYXV0aGVudGljYXRpb25fcGFzc3BocmFzZTogYXdzLnNtLlNFQ1JFVF9OQU1FXzJcbiAgICBwcml2YWN5X3Byb3RvY29sOiBBRVMyNTZcbiAgICBwcml2YWN5X3Bhc3NwaHJhc2U6IGF3cy5zbS5TRUNSRVRfTkFNRV8zIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTMwMywiY29sdW1uIjoxLCJvZmZzZXQiOjMwMjEwfSwiZW5kIjp7ImxpbmUiOjEzMTAsImNvbHVtbiI6NCwib2Zmc2V0IjozMDQzMH0sImluZGVudCI6WzEsMSwxLDEsMSwxLDFdfX0="></pre>
+<div data-type="component" data-component="Callout"
+  data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ2YXJpYW50IiwidmFsdWUiOiJ0aXAifV0=">
+  <div data-type="prop" data-prop="children">
+    <p>値ごとに専用のシークレットを作成する必要があります。上記の例では、3つの異なる秘密の名前が使用されていることに注意してください。</p>
+  </div>
+</div>
+<h2 id="multiple-v3-discovery">複数のSNMPv3プロファイルを使用した検出の実行</h2>
+<p>複数のSNMPv3プロファイルでの検出ジョブの実行をサポートするために、 <code class="notranslate">discovery.default_v3</code>キーを<a
+    href="#snmpv3-config">SNMPv3構成</a>の配列を保持する<code class="notranslate">discovery.other_v3s</code>キーに置き換えることができます。</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiICBvdGhlcl92M3M6XG4gIC0gdXNlcl9uYW1lOiB0ZXN0MVxuICAgIGF1dGhlbnRpY2F0aW9uX3Byb3RvY29sOiBNRDVcbiAgICBhdXRoZW50aWNhdGlvbl9wYXNzcGhyYXNlOiBhdXRoUGFzczFcbiAgICBwcml2YWN5X3Byb3RvY29sOiBBRVMyNTZcbiAgICBwcml2YWN5X3Bhc3NwaHJhc2U6IHByaXZhY3lQYXNzMVxuICAgIGNvbnRleHRfZW5naW5lX2lkOiBcIlwiXG4gICAgY29udGV4dF9uYW1lOiBcIlwiXG4gIC0gdXNlcl9uYW1lOiB0ZXN0MlxuICAgIGF1dGhlbnRpY2F0aW9uX3Byb3RvY29sOiBTSEFcbiAgICBhdXRoZW50aWNhdGlvbl9wYXNzcGhyYXNlOiBhdXRoUGFzczJcbiAgICBwcml2YWN5X3Byb3RvY29sOiBERVNcbiAgICBwcml2YWN5X3Bhc3NwaHJhc2U6IHByaXZhY3lQYXNzMlxuICAgIGNvbnRleHRfZW5naW5lX2lkOiBcIlwiXG4gICAgY29udGV4dF9uYW1lOiBcIlwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTMyMCwiY29sdW1uIjoxLCJvZmZzZXQiOjMwODgzfSwiZW5kIjp7ImxpbmUiOjEzMzYsImNvbHVtbiI6NCwib2Zmc2V0IjozMTMyMH0sImluZGVudCI6WzEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDEsMSwxLDFdfX0="></pre>
+<h2 id="match_attributes-attribute"><strong>match_attributes</strong>属性</h2>
+<p>可観測性のニーズに見合う価値を生み出さないデータのフィルタリングをサポートするために、 <code class="notranslate">global.match_attributes.{}</code>または<code
+    class="notranslate">devices.&#x3C;deviceName>.match_attributes.{}</code>属性マップを設定できます。</p>
+<p>これにより、New Relicにデータを送信する前に、 <strong>ktranslate</strong>レベルでフィルタリングが提供され、インターフェースなどの監視をきめ細かく制御できるようになります。</p>
+<p>このマップのデフォルトの動作は<code class="notranslate">OR</code>条件ですが、これをオーバーライドして、キー名の前に<code
+    class="notranslate">!</code>を付けることで<code class="notranslate">AND</code>演算子を強制することができます。これは、一致したアイテムのみを返し、すべての<code
+    class="notranslate">null</code>および<code class="notranslate">""</code> （空の）結果を省略する場合にも役立ちます。</p>
+<div data-type="component" data-component="CollapserGroup">
+  <div data-type="prop" data-prop="children">
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiZGVmYXVsdC1vci1udWxsIn0seyJ0eXBlIjoibWR4QXR0cmlidXRlIiwibmFtZSI6InRpdGxlIiwidmFsdWUiOiJEZWZhdWx0ICdPUicgd2l0aCBudWxsIGFuZCBlbXB0eSB2YWx1ZXMifV0=">
+      <div data-type="prop" data-prop="title">null値と空の値を持つデフォルトの「OR」</div>
+      <div data-type="prop" data-prop="children">
+        <p><code class="notranslate">if_Alias</code>が<code
+            class="notranslate">Uplink</code>で始まる場合、<strong>または</strong><code
+            class="notranslate">if_interface_name</code>が<code class="notranslate">Gig</code>で始まる場合に一致し、すべての<code
+            class="notranslate">null</code>と<code class="notranslate">""</code>の値を保持します。</p>
+        <pre data-type="component" data-component="CodeBlock"
+          data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgZGV2aWNlTmFtZTpcbiAgICAuLi5cbiAgICBtYXRjaF9hdHRyaWJ1dGVzOlxuICAgICAgaWZfQWxpYXM6IFwiXlVwbGluay4qXCJcbiAgICAgIGlmX2ludGVyZmFjZV9uYW1lOiBcIl5HaWcuKlwiIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTM1MywiY29sdW1uIjoxLCJvZmZzZXQiOjMyMjM3fSwiZW5kIjp7ImxpbmUiOjEzNjEsImNvbHVtbiI6Mywib2Zmc2V0IjozMjM5OH0sImluZGVudCI6WzEsMSwxLDEsMSwxLDEsMV19fQ=="></pre>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoiYW5kLW5vLW51bGwifSx7InR5cGUiOiJtZHhBdHRyaWJ1dGUiLCJuYW1lIjoidGl0bGUiLCJ2YWx1ZSI6IidBTkQnLCBvbWl0IG51bGwgYW5kIGVtcHR5IHZhbHVlcyJ9XQ==">
+      <div data-type="prop" data-prop="title">'AND'、nullおよび空の値を省略</div>
+      <div data-type="prop" data-prop="children">
+        <p><code class="notranslate">if_Alias</code>が<code
+            class="notranslate">Uplink</code>で始まる場合、<strong>および</strong><code
+            class="notranslate">if_interface_name</code>が<code class="notranslate">Gig</code>で始まる場合に一致し、すべての<code
+            class="notranslate">null</code>と<code class="notranslate">""</code>の値を削除します。</p>
+        <pre data-type="component" data-component="CodeBlock"
+          data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgZGV2aWNlTmFtZTpcbiAgICAuLi5cbiAgICBtYXRjaF9hdHRyaWJ1dGVzOlxuICAgICAgaWZfQWxpYXM6IFwiXlVwbGluay4qXCJcbiAgICAgIFwiIWlmX2ludGVyZmFjZV9uYW1lXCI6IFwiXkdpZy4qXCIiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxMzY5LCJjb2x1bW4iOjEsIm9mZnNldCI6MzI2Mjl9LCJlbmQiOnsibGluZSI6MTM3NywiY29sdW1uIjozLCJvZmZzZXQiOjMyNzkzfSwiaW5kZW50IjpbMSwxLDEsMSwxLDEsMSwxXX19"></pre>
+      </div>
+    </div>
+    <div data-type="component" data-component="Collapser"
+      data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJpZCIsInZhbHVlIjoic2luZ2xlLW5vLW51bGwifSx7InR5cGUiOiJtZHhBdHRyaWJ1dGUiLCJuYW1lIjoidGl0bGUiLCJ2YWx1ZSI6IlNpbmdsZSBtYXRjaCwgb21pdCBudWxsIGFuZCBlbXB0eSB2YWx1ZXMifV0=">
+      <div data-type="prop" data-prop="title">単一一致、null値と空の値を省略</div>
+      <div data-type="prop" data-prop="children">
+        <p><code class="notranslate">if_Alias</code>が<code class="notranslate">Uplink</code>で始まる場合に一致し、すべての<code
+            class="notranslate">null</code>と<code class="notranslate">""</code>の値を削除します。</p>
+        <pre data-type="component" data-component="CodeBlock"
+          data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiZGV2aWNlczpcbiAgZGV2aWNlTmFtZTpcbiAgICAuLi5cbiAgICBtYXRjaF9hdHRyaWJ1dGVzOlxuICAgICAgXCIhaWZfQWxpYXNcIjogXCJeVXBsaW5rLipcIiIsInBvc2l0aW9uIjp7InN0YXJ0Ijp7ImxpbmUiOjEzODUsImNvbHVtbiI6MSwib2Zmc2V0IjozMjk4M30sImVuZCI6eyJsaW5lIjoxMzkyLCJjb2x1bW4iOjMsIm9mZnNldCI6MzMxMDl9LCJpbmRlbnQiOlsxLDEsMSwxLDEsMSwxXX19"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+<h2 id="flow_only-attribute"><strong>flow_only</strong>属性</h2>
+<p>パフォーマンス統計にアクセスできない、利用できない、または必要とされないデバイスの監視をサポートするために、 <code
+    class="notranslate">devices.&#x3C;deviceName>.flow_only</code>属性を<code class="notranslate">true</code>に設定できます。</p>
+<p>これにより、 <code
+    class="notranslate">KFlow</code>イベント名前空間にのみテレメトリを持つ<strong>フローデバイス</strong>エンティティが生成されます。または、構成ファイルにSNMPデバイスとして含まれているデバイスからフローテレメトリを収集すると、<strong>ルーター</strong>や<strong>ファイアウォール</strong>などの既存のエンティティに<code
+    class="notranslate">KFlow</code>データの装飾が追加されます。</p>
+<p>New Relicでは、次のイベントを調査することで、このポーリングの結果を確認できます。</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoic3FsIiwibWV0YSI6bnVsbCwidmFsdWUiOiJGUk9NIEtGbG93IFNFTEVDVCBjb3VudCgqKSBGQUNFVCBkZXZpY2VfbmFtZSBXSEVSRSBpbnN0cnVtZW50YXRpb24ubmFtZSA9ICduZXRmbG93LWV2ZW50cycgVElNRVNFUklFUyIsInBvc2l0aW9uIjp7InN0YXJ0Ijp7ImxpbmUiOjE0MDMsImNvbHVtbiI6MSwib2Zmc2V0IjozMzc4OH0sImVuZCI6eyJsaW5lIjoxNDA1LCJjb2x1bW4iOjQsIm9mZnNldCI6MzM5MDB9LCJpbmRlbnQiOlsxLDFdfX0="></pre>
+<h2 id="response_time-attribute"><strong>response_time</strong>属性と<strong>ping_only</strong>属性</h2>
+<p>パフォーマンス統計にアクセスできない、または利用できないデバイスの監視をサポートするため、または基本的なラウンドトリップ時間（RTT）の監視が必要な単純な場合に、 <code
+    class="notranslate">global.response_time</code>または<code
+    class="notranslate">devices.&#x3C;deviceName>.ping_only</code>属性を<code class="notranslate">true</code>に設定できます。</p>
+<p>この機能は、 <a
+    href="https://pkg.go.dev/github.com/sparrc/go-ping">go-ping</a>パッケージを使用して、非特権UDPパケットをデバイスに送信し、平均、最小、最大、および標準偏差のラウンドトリップ時間（RTT）を収集します。このパッケージには、
+  <code class="notranslate">ktranslate</code>からデバイスのIPアドレスへの1パケット/秒の送信に基づくエンドポイントのパケット損失率も表示されます。これは、 <code
+    class="notranslate">devices.&#x3C;deviceName>.ping_interval_sec</code>属性を設定することで上書きできます。Dockerの実行時に<code
+    class="notranslate">KENTIK_PING_PRIV=true</code>環境変数を設定することで、特権ICMPパケットの使用を有効にできます。
+</p>
+<p><code class="notranslate">global.response_time</code>属性を<code
+    class="notranslate">true</code>に設定すると、既存のSNMPポーリングに加えてRTT監視が追加されます。RTTのUDP|ICMPパケットのみを使用し、SNMPポーリングを使用しないデバイスを監視するには、
+  <code class="notranslate">devices.&#x3C;deviceName>.ping_only: true</code>を使用します。
+</p>
+<p>New Relicでは、次のメトリックを調査することで、このポーリングの結果を確認できます。</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoic3FsIiwibWV0YSI6bnVsbCwidmFsdWUiOiJGUk9NIE1ldHJpYyBTRUxFQ1QgYXZlcmFnZShrZW50aWsucGluZy5BdmdSdHRNcykgQVMgJ0F2ZXJhZ2UnLCBtYXgoa2VudGlrLnBpbmcuTWF4UnR0TXMpIEFTICdNYXgnLCBtaW4oa2VudGlrLnBpbmcuTWluUnR0TXMpIEFTICdNaW4nLCBhdmVyYWdlKGtlbnRpay5waW5nLlN0ZERldlJ0dCkgQVMgJ1N0ZERldicsIGxhdGVzdChrZW50aWsucGluZy5QYWNrZXRMb3NzUGN0KSBBUyAnUGFja2V0IExvc3MgJScgRkFDRVQgZGV2aWNlX25hbWUiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxNDE3LCJjb2x1bW4iOjEsIm9mZnNldCI6MzUxNjR9LCJlbmQiOnsibGluZSI6MTQxOSwiY29sdW1uIjo0LCJvZmZzZXQiOjM1NDI0fSwiaW5kZW50IjpbMSwxXX19"></pre>
+<div data-type="component" data-component="Callout"
+  data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJ2YXJpYW50IiwidmFsdWUiOiJ0aXAifV0=">
+  <div data-type="prop" data-prop="children">
+    <p>フローデバイスからRTTメトリックを収集する場合は、 <code class="notranslate">flow_only</code>属性の代わりに<code
+        class="notranslate">ping_only</code>属性を使用できます。<code class="notranslate">ping_only</code>と<code
+        class="notranslate">flow_only</code>の両方が<code class="notranslate">true</code>の場合、デバイスは<code
+        class="notranslate">flow_only</code>デバイスとして扱われます。</p>
+  </div>
+</div>
+<h2>フローデータアプリケーションマッピング</h2>
+<p>デフォルトでは、フローテレメトリは、特定のフロー会話で使用されているレイヤー4ポートの評価に基づいて、既知のアプリケーションにマッピングされます。必要に応じて、Dockerの実行時に<code
+    class="notranslate">-application_map</code>フラグにYAMLファイルを提供することで、デフォルトのマッピングをオーバーライドできます。これにより、識別したポートに基づいてアプリケーション名を指定できます。
+</p>
+<p>構文例：</p>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjoieWFtbCIsIm1ldGEiOm51bGwsInZhbHVlIjoiYXBwbGljYXRpb25zOlxuICAtIHBvcnRzOiBbOTA5MiwgOTA5M11cbiAgICBuYW1lOiBrYWZrYVxuICAtIHBvcnRzOiBbODAsIDgwODBdXG4gICAgbmFtZTogaHR0cFxuICAtIHBvcnRzOiBbNDQzLCA4NDQzXVxuICAgIG5hbWU6IGh0dHBzIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTQzMSwiY29sdW1uIjoxLCJvZmZzZXQiOjM2MTAzfSwiZW5kIjp7ImxpbmUiOjE0MzksImNvbHVtbiI6NCwib2Zmc2V0IjozNjI0NH0sImluZGVudCI6WzEsMSwxLDEsMSwxLDEsMV19fQ=="></pre>
+<h2>フローデータ入力フィルタリング</h2>
+<p>デフォルトでは、フローデータコンテナは受信したすべてのフローパケットを収集して処理します。必要に応じて、指定したフィルターと一致しないすべてのトラフィックを無視する包含フィルターを<code
+    class="notranslate">-nf.source</code>フラグに追加できます。</p>
+<p>構文： <code class="notranslate">--filters $TYPE,$FIELD,$FUNCTION,$MATCH</code></p>
+<table data-type="component">
+  <thead data-type="component">
+    <tr data-type="component">
+      <th data-type="component"
+        data-props="W3sidHlwZSI6Im1keEF0dHJpYnV0ZSIsIm5hbWUiOiJzdHlsZSIsInZhbHVlIjp7InR5cGUiOiJtZHhWYWx1ZUV4cHJlc3Npb24iLCJ2YWx1ZSI6Insgd2lkdGg6IFwiMjAwcHhcIiB9IiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTQ1MCwiY29sdW1uIjoxNywib2Zmc2V0IjozNjU5NX0sImVuZCI6eyJsaW5lIjoxNDUwLCJjb2x1bW4iOjM3LCJvZmZzZXQiOjM2NjE1fX19fV0=">
+        <p>引数名</p>
+      </th>
+      <th data-type="component">
+        <p>必須</p>
+      </th>
+      <th data-type="component">
+        <p>説明</p>
+      </th>
+    </tr>
+  </thead>
+  <tbody data-type="component">
+    <tr data-type="component">
+      <td data-type="component">
+        <p>$ TYPE</p>
+      </td>
+      <td data-type="component">
+        <p>✓✓</p>
+      </td>
+      <td data-type="component">
+        <p>適用するフィルターのタイプ。可能な値は、 <code class="notranslate">string</code> 、 <code class="notranslate">int</code> 、および<code
+            class="notranslate">addr</code>です。</p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p>$ FIELD</p>
+      </td>
+      <td data-type="component">
+        <p>✓✓</p>
+      </td>
+      <td data-type="component">
+        <p>一致パターンを評価するフィールドの名前。</p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p>$ FUNCTION</p>
+      </td>
+      <td data-type="component">
+        <p>✓✓</p>
+      </td>
+      <td data-type="component">
+        <p>評価中に使用する関数のタイプ。可能な値は<code class="notranslate">Equal: ==</code> 、 <code
+            class="notranslate">NotEqual: !=</code> 、 <code class="notranslate">LessThan: &#x3C;</code> 、 <code
+            class="notranslate">GreaterThan: ></code> 、 <code class="notranslate">Contains: %</code></p>
+      </td>
+    </tr>
+    <tr data-type="component">
+      <td data-type="component">
+        <p>$ MATCH</p>
+      </td>
+      <td data-type="component">
+        <p>✓✓</p>
+      </td>
+      <td data-type="component">
+        <p>一致パターンとして使用される値。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3>フィルタの例</h3>
+<ul>
+  <li><code class="notranslate">10.0.0.0/24</code> CIDR範囲の送信元アドレスからのみフローデータを収集します</li>
+</ul>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjpudWxsLCJtZXRhIjpudWxsLCJ2YWx1ZSI6Ii1uZi5zb3VyY2Ugc2Zsb3cgLS1maWx0ZXJzIGFkZHIsc3JjX2FkZHIsJSwxMC4xMC4wLjAvMjQiLCJwb3NpdGlvbiI6eyJzdGFydCI6eyJsaW5lIjoxNTI3LCJjb2x1bW4iOjEsIm9mZnNldCI6Mzc3MTB9LCJlbmQiOnsibGluZSI6MTUyOSwiY29sdW1uIjo0LCJvZmZzZXQiOjM3NzczfSwiaW5kZW50IjpbMSwxXX19"></pre>
+<ul>
+  <li>宛先ポートがと等しくないフローデータのみを収集します <code class="notranslate">8531</code></li>
+</ul>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjpudWxsLCJtZXRhIjpudWxsLCJ2YWx1ZSI6Ii1uZi5zb3VyY2UgbmV0ZmxvdzUgLS1maWx0ZXJzIGludCxsNF9kc3RfcG9ydCwhPSw4NTMxIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTUzMywiY29sdW1uIjoxLCJvZmZzZXQiOjM3ODUxfSwiZW5kIjp7ImxpbmUiOjE1MzUsImNvbHVtbiI6NCwib2Zmc2V0IjozNzkxMn0sImluZGVudCI6WzEsMV19fQ=="></pre>
+<p><em>継承された<code class="notranslate">AND</code>演算子を使用して複数のフィルターを追加することもできます</em></p>
+<ul>
+  <li><code class="notranslate">10.0.0.0/24</code> CIDR範囲内で、宛先ポートがと等しくない送信元アドレスからのみフローデータを収集します <code
+      class="notranslate">8531</code></li>
+</ul>
+<pre data-type="component" data-component="CodeBlock"
+  data-props="eyJsYW5nIjpudWxsLCJtZXRhIjpudWxsLCJ2YWx1ZSI6Ii0tZmlsdGVycyBhZGRyLHNyY19hZGRyLCUsMTAuMC4wLjAvMjQgLS1maWx0ZXJzIGludCxsNF9kc3RfcG9ydCwhPSw4NTMxIiwicG9zaXRpb24iOnsic3RhcnQiOnsibGluZSI6MTU0MSwiY29sdW1uIjoxLCJvZmZzZXQiOjM4MTI3fSwiZW5kIjp7ImxpbmUiOjE1NDMsImNvbHVtbiI6NCwib2Zmc2V0IjozODIwNn0sImluZGVudCI6WzEsMV19fQ=="></pre>
