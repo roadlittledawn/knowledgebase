@@ -1,0 +1,21 @@
+---
+title: Find files in directories that match certain file naming pattern/names
+languages:
+  - bash
+topics:
+  - search
+skillLevel: 3
+needsHelp: false
+---
+
+Create file of list of directories without a specified file in them
+
+```bash
+find src/content/docs -mindepth 2 -maxdepth 7 -type d '!' -exec test -e "{}/index.mdx" ';' -print > auto-index-dirs.txt
+```
+
+Get count of all files in given directory with particular file extension
+
+```bash
+find src/content/docs -mindepth 1 -type f -name "*.mdx" | wc -l
+```
