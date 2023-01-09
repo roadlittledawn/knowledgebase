@@ -1,0 +1,53 @@
+---
+title: "JS: Shuffle names in an array"
+languages:
+  - javascript
+topics:
+  - randomization
+skillLevel: 2
+needsHelp: false
+---
+
+For funsies I asked chatGPT to randomize names in an array, like we do for standup.
+
+It gave me:
+
+```js
+const names = ["Alice", "Bob", "Charlie", "Diana", "Eve"];
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+const shuffledNames = shuffle(names);
+console.log(shuffledNames);
+```
+
+and it even explained:
+
+```
+This code uses the Fisher-Yates shuffle algorithm, which is a popular and efficient way to shuffle an array in place. The shuffle function takes an array as input and shuffles it in place, meaning that the original array is modified. The shuffled array is then returned and logged to the console.
+```
+
+pretty awesome.
+
+and for good measure here's my name shuffle code i use:
+
+```js
+copy(
+  ["Tabatha", "Clark", "Liz", "Sunny", "Clinton"]
+    .map((a) => ({ sort: a === "Clinton" ? 1 : Math.random(), value: a }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((a) => a.value)
+);
+```
+
+the `copy()` function is available in browsers to copy to clipboard.
+
+## Related
+
+- shuffleNames.js in `src/files`.
