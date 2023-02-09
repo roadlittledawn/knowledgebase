@@ -20,4 +20,6 @@ Get count of all files in given directory with particular file extension
 find src/content/docs -mindepth 1 -type f -name "*.mdx" | wc -l
 # or using ls
 ls -lR src/content/docs/**/*.mdx | wc -l
+# look for multiple file extensions
+ls -lR src/content/whats-new/**/*.(png|gif|jpg|jpeg) | wc -l
 ```
