@@ -1,0 +1,42 @@
+---
+title: "JS: Shuffle names in an array"
+languages:
+  - javascript
+topics:
+  - randomization
+skillLevel: 2
+needsHelp: false
+---
+
+This node script runs on a specified directory to slugify the file names. It includes the option to lower case the names as well.
+
+Create the script, name it `slugify-file-names.js`, and stick anywhere in same repo as files and run `node slugify-file-names.js`
+
+```js
+const fs = require("fs");
+const path = require("path");
+const slugify = require("slugify");
+
+const directoryPath = path.join(process.cwd(), "/path/to/files");
+
+fs.readdir(directoryPath, (err, files) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  // process each file in the directory
+  files.forEach((file) => {
+    const oldPath = path.join(directoryPath, file);
+    const newPath = path.join(directoryPath, slugify(file, { lower: true }));
+
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(`${oldPath} renamed to ${newPath}`);
+      }
+    });
+  });
+});
+```
