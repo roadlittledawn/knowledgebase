@@ -1,0 +1,32 @@
+---
+title: How to rebase
+languages:
+  - bash
+topics:
+  - git
+skillLevel: 2
+needsHelp: true
+---
+
+# rebase to clean / reorg commit history
+
+To use rebase interactively for last N commits, run:
+
+```
+git rebase -i HEAD~N
+```
+
+Squash all commits except one. I choose the oldest one so I don't get previous commit error. You can also `reword` if you want to eventually reword the git commit message.
+
+I sometimes I have to force push if git gets angry
+
+```
+git push origin HEAD --force
+```
+
+Show recent commits
+
+```
+git log -n 5
+git show -3
+```
