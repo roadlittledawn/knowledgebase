@@ -1,0 +1,35 @@
+---
+title: Find info for deleted files in git history
+languages:
+  - bash
+topics:
+  - git
+  - file system
+  - git history
+skillLevel: 3
+needsHelp: false
+---
+
+1. get the file path you're interested in. example:
+
+```
+src/content/docs/apm/apm-ui-pages/monitoring/apm-summary-page-view-transaction-apdex-usage-data.mdx
+```
+
+2. in a terminal in the root of the docs-website, run git log like this:
+
+```
+git log -- src/content/docs/apm/apm-ui-pages/monitoring/apm-summary-page-view-transaction-apdex-usage-data.mdx
+```
+
+3. you can see the commits. if it was deleted it's likely deleted in the last commit. take the commit SHA and plug that into github url like so
+
+```
+https://github.com/newrelic/docs-website/commit/4db1145764d78844e046cb6ec6754aa72ab45233
+```
+
+4. from there you can see the PR the commit was associated with:
+
+```
+https://github.com/newrelic/docs-website/pull/13542
+```
