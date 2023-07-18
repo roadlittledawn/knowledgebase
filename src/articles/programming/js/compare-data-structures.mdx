@@ -1,0 +1,48 @@
+---
+title: "JS: Compare two data structures"
+languages:
+  - javascript
+  - nodejs
+topics:
+  - compare
+  - data management
+skillLevel: 2
+needsHelp: false
+---
+
+we encoutered an issue recently where one of our github action workflow scripts pulls data from an API and the service behind that API has some async resolvers so the order of the objects and fields aren't always the same.
+
+[PR diff example](https://github.com/newrelic/docs-website/pull/13895/files)
+
+simplified example:
+
+first request returns:
+
+```json
+{ "name": "banana", "type": "fruit" }
+```
+
+second request returns:
+
+```json
+{ "type": "fruit", "name": "banana" }
+```
+
+in this case it'd be best to "deep compare" the returned data to compare all properties for sameness regardless of order. there's probably a variety of ways to do this, but one simple way is to use a utility like `lodash`.
+
+example:
+
+```js
+const _ = require("lodash");
+
+const object_1 = { name: "banana", type: "fruit" };
+const object_2 = { type: "fruit", name: "banana" };
+
+const stringObject_1 = JSON.stringify(object_1);
+const stringObject_2 = JSON.stringify(object_2);
+
+console.log({
+  stringCompareIsEqual: stringObject_1 === stringObject_2,
+  lodashCompareIsEqual: _.isEqual(object_1, object_2),
+});
+```
