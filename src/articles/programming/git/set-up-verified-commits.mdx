@@ -1,5 +1,5 @@
 ---
-title: Set up verified commits
+title: Set up signed / verified commits
 languages:
   - bash
 topics:
@@ -104,7 +104,7 @@ Now you can copy the value you see replaced by `YOUR_KEY_ID` in the above exampl
 Run this command and paste in your value in place of `YOUR_KEY_ID`
 
 ```bash
- gpg --armor --export YOUR_KEY_ID
+ gpg --armor --export YOUR_KEY_ID | pbcopy
 ```
 
 You should get an output that looks like this:
