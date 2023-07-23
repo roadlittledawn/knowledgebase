@@ -8,21 +8,35 @@ if [ ! -d "$templates_dir" ]; then
     exit 1
 fi
 
-# Prompt user for the template type
+# List available template types and prompt user for the template number
 echo "Available template types:"
-ls "$templates_dir"
-echo -n "Enter the name of the template you want to use: "
-read template_name
+num=1
+for template in "$templates_dir"/*; do
+    echo "$num. $(basename "$template")"
+    ((num++))
+done
 
-# Check if the selected template exists
-if [ ! -f "$templates_dir/$template_name" ]; then
-    echo "Error: The specified template does not exist in the 'templates' directory."
+echo -n "Enter the number of the template you want to use: "
+read template_num
+
+# Validate the input template number
+if ! [[ "$template_num" =~ ^[0-9]+$ ]]; then
+    echo "Error: Invalid input. Please enter a valid number."
+    exit 1
+fi
+
+template_array=("$templates_dir"/*)
+
+if ((template_num < 1 || template_num > ${#template_array[@]})); then
+    echo "Error: Invalid template number. Please select a number from the list."
     exit 1
 fi
 
 # Prompt user for the output directory
 echo -n "Enter the name of the output directory (press Enter for default 'output' directory): "
 read custom_output_dir
+
+selected_template="${template_array[$((template_num - 1))]}"
 
 # Set the output directory to the default 'output' directory if not provided
 if [ -z "$custom_output_dir" ]; then
@@ -36,13 +50,6 @@ if [ ! -d "$output_dir" ]; then
     mkdir "$output_dir"
 fi
 
-# Prompt user for the number of files to create
-echo -n "Enter the number of files you want to create: "
-read num_files
-
-# Create the files from the selected template
-for ((i = 1; i <= num_files; i++)); do
-    cp "$templates_dir/$template_name" "$output_dir/${template_name}"
-done
+cp "$selected_template" "$output_dir/$(basename "$selected_template")"
 
 echo "Files created successfully in the '$output_dir' directory."
