@@ -1,0 +1,64 @@
+---
+title: Start local server on your machine
+languages:
+  - lang
+topics:
+  - something
+skillLevel: 3
+needsHelp: false
+---
+
+from jerel: ngrok or localtunnel
+
+# ngrok (via chatGPT)
+
+Sure, I can guide you through the process of using ngrok to set up a simple server on your machine and expose it to the internet to view incoming requests. Ngrok is a tool that creates secure tunnels to localhost, making your locally hosted server accessible from external sources.
+
+Here's a step-by-step guide:
+
+1. **Download and Install Ngrok:**
+
+   If you haven't already, download ngrok from the official website: https://ngrok.com/download. Make sure to select the version compatible with your operating system. After downloading, extract the archive and place the ngrok executable in a directory of your choice (e.g., `/path/to/ngrok`).
+
+2. **Start Your Local Server:**
+
+   Spin up a simple local server on your machine. You can use Python's built-in `http.server` module for this purpose. Open your terminal and navigate to the directory where you want to serve files, then run:
+
+   ```bash
+   python -m http.server 8000
+   ```
+
+   This starts a basic HTTP server on port 8000, serving files from the current directory.
+
+3. **Expose the Local Server Using Ngrok:**
+
+   In a new terminal window, navigate to the directory where you placed the ngrok executable. Run the following command to expose your local server:
+
+   ```bash
+   ./ngrok http 8000
+   ```
+
+   Ngrok will generate a public URL that forwards incoming requests to your local server. You'll see output similar to the following:
+
+   ```
+   Session Status      online
+   Account             John Doe (Plan: Free)
+   Version             2.3.40
+   Region              United States (us)
+   Web Interface       http://127.0.0.1:4040
+   Forwarding          http://a1b2c3d4e5.ngrok.io -> http://localhost:8000
+   ```
+
+   The forwarding URL (in this case, `http://a1b2c3d4e5.ngrok.io`) is the one you can use to access your local server from external sources.
+
+4. **View Incoming Requests:**
+
+   Open a web browser and navigate to the forwarding URL provided by ngrok. You should see your local server's content, and you'll be able to access it from anywhere as long as ngrok's tunnel is active.
+
+5. **Monitoring Requests:**
+
+   Ngrok provides a web interface that you can access at `http://127.0.0.1:4040` to monitor incoming requests, inspect request/response headers, and more. This can be useful for debugging and understanding the traffic to your local server.
+
+Remember that the ngrok tunnel is temporary and will close if you close the terminal window running ngrok. If you need a more persistent solution, consider using paid ngrok plans or other similar services.
+
+Always be cautious about security when exposing your local server to the internet, especially if you're handling sensitive data or using this setup in a production environment.
