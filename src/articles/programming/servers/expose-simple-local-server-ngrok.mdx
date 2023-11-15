@@ -1,11 +1,12 @@
 ---
-title: Start local server on your machine
+title: Expose local server on machine to receive public requests
 languages:
   - lang
 topics:
-  - something
+  - servers
+  - local development
 skillLevel: 3
-needsHelp: false
+needsHelp: true
 ---
 
 from jerel: ngrok or localtunnel
@@ -20,12 +21,20 @@ Here's a step-by-step guide:
 
    If you haven't already, download ngrok from the official website: https://ngrok.com/download. Make sure to select the version compatible with your operating system. After downloading, extract the archive and place the ngrok executable in a directory of your choice (e.g., `/path/to/ngrok`).
 
+2. Signup for account at ngrok. Get auth token at https://dashboard.ngrok.com/get-started/your-authtoken
+
+3. Add auth token `ngrok` config:
+
+```bash
+ngrok config add-authtoken TOKEN_HERE
+```
+
 2. **Start Your Local Server:**
 
    Spin up a simple local server on your machine. You can use Python's built-in `http.server` module for this purpose. Open your terminal and navigate to the directory where you want to serve files, then run:
 
    ```bash
-   python -m http.server 8000
+   python3 -m http.server 8000
    ```
 
    This starts a basic HTTP server on port 8000, serving files from the current directory.

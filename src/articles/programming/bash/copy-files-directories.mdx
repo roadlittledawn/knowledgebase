@@ -1,0 +1,21 @@
+---
+title: Title here
+languages:
+  - lang
+topics:
+  - something
+skillLevel: 3
+needsHelp: false
+---
+
+Copy directory contents into another directory:
+
+```bash
+cp -r source/* destination/
+```
+
+Copy direCtory contents except files / directories that start with a `.`. For example, do not copy over the `.git` directory:
+
+```bash
+cp -r source/!(.*) destination/
+```
