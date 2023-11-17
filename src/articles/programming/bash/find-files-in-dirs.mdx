@@ -23,3 +23,14 @@ ls -lR src/content/docs/**/*.mdx | wc -l
 # look for multiple file extensions
 ls -lR src/content/whats-new/**/*.(png|gif|jpg|jpeg) | wc -l
 ```
+
+Find all files and directories that have a particular string in them. For example, all the files and directories that have the string `install` in them.
+
+```bash
+# Search files and directories
+find src/content/docs -name "*install*" | wc -l
+# Search only files
+find src/content/docs -type f -name "*install*" | wc -l
+# Search only directories
+find src/content/docs -type d -name "*install*" | wc -l
+```
