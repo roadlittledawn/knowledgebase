@@ -24,7 +24,18 @@ export PATH="/opt/homebrew/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# bash completion script
+# make nvm available apple silicon
+export NVM_DIR="$HOME/.nvm"
+# This loads nvm
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+
+# This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+
+# nvm docs say to do this
+# source $(brew --prefix nvm)/nvm.sh
+
+# bash completion script on apple intel
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # use version of node specified in .nvmrc
