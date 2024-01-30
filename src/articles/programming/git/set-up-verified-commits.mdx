@@ -151,3 +151,29 @@ gpg-agent --daemon
 ```
 
 Finally, try out a commit! If you use github desktop it's probably a good idea to quit/restart the app before committing.
+
+# Automatically enter / remember your GPG passphrase
+
+If you're tired of entering your GPG passphrase every time you commit you can use `pinentry-mac` to remember it for you. First, install it with homebrew:
+
+```bash
+brew install pinentry-mac
+```
+
+You want to make sure you have the following in your `~/.gnupg/gpg-agent.conf` file (Apple Silicon):
+
+```bash
+pinentry-program /opt/homebrew/bin/pinentry-mac
+```
+
+On Apple Intel macs this is the path for pinentry:
+
+```bash
+pinentry-program /usr/local/bin/pinentry-mac
+```
+
+Tip: On Apple silicon macs you may need to copy the pinentry-mac over from `pinentry-program /opt/homebrew/bin/pinentry-mac`. This little command writes to that file with wherever the file is.
+
+```bash
+echo "pinentry-program $(brew --prefix)/bin/pinentry-mac" | tee ~/.gnupg/gpg-agent.conf
+```
