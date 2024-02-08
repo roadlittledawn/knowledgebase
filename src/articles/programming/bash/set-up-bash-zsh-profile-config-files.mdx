@@ -1,0 +1,55 @@
+---
+title: bash/zsh profile config file
+languages:
+  - lang
+topics:
+  - something
+skillLevel: 3
+needsHelp: false
+---
+
+# Difference between .bashrc and .bash_profile
+
+Difference between `.bashrc` and `.bash_profile` is that `.bash_profile` is executed for login shells, while `.bashrc` is executed for interactive non-login shells.
+
+When you login (type username and password) via console, either sitting at the machine, or remotely via `ssh`: `.bash_profile` is executed to configure your shell before the initial command prompt.
+
+# Example
+
+```bash
+# if homebrew `brew` not available by default
+export PATH="/opt/homebrew/bin:$PATH"
+
+# make nvm available
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# make nvm available apple silicon
+export NVM_DIR="$HOME/.nvm"
+# This loads nvm
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+
+# If above doesn't work try this
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# This loads nvm
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+
+# This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+
+# nvm docs say to do this
+# source $(brew --prefix nvm)/nvm.sh
+
+# bash completion script on apple intel
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# use version of node specified in .nvmrc
+if [[ -f .nvmrc ]]; then
+    nvm use
+fi
+
+# some handy git command shorthands
+alias gpush='git push origin HEAD'
+alias gpull='git pull'
+```
