@@ -10,15 +10,27 @@ needsHelp: true
 
 # rebase to clean / reorg commit history
 
-To use rebase interactively for last N commits, run:
+To use rebase interactively for last `N` commits, run:
 
 ```
 git rebase -i HEAD~N
 ```
 
-Squash all commits except one. I choose the oldest one so I don't get previous commit error. You can also `reword` if you want to eventually reword the git commit message.
+Using `vim` editor, squash all commits except one. I choose the oldest one so I don't get previous commit error. You can also `reword` if you want to eventually reword the git commit message.
 
-I sometimes I have to force push if git gets angry
+```
+reword c69e4d08 feat: replace run goals with swim goal
+squash 4d6756ea chore: add example .env file
+squash 3fbaca38 chore: remove unused named import
+```
+
+Hit `esc` and type `:wq` for write/quit.
+
+If you chose `reword` for the commit you chose, edit the commit message.
+
+It prompts to change commit message body with list of commits you just squashed.
+
+Push changes up to origin. I sometimes I have to force push if git gets angry
 
 ```
 git push origin HEAD --force
