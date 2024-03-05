@@ -179,3 +179,11 @@ pinentry-program /usr/local/bin/pinentry-mac
 ```
 
 When you go to commit, a dialog box will pop up asking for your passphrase. Check the box to remember it and you're good to go!
+
+If you don't see the dialog box, you can kill agent via this command:
+
+```bash
+pkill -TERM gpg-agent
+```
+
+Then reopen your terminal and try to commit again.
