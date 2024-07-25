@@ -1,0 +1,41 @@
+---
+title: Search git history for contributor data (github)
+languages:
+  - bash
+topics:
+  - git
+  - github
+  - reporting
+skillLevel: 3
+needsHelp: false
+---
+
+Using the `gh` CLI tool, you can search the git history of a repository for contributor data. This can be useful for reporting purposes, or to get a sense of who has been contributing to a project.
+
+## Search PRs reviewed by specific user
+
+gh search prs --reviewed-by roadlittledawn
+
+## Search PRs created after date, commented on by specific user
+
+gh search prs --created ">=2023-10-01" --commenter roadlittledawn
+
+## Search commits for specific user, specific repo
+
+gh search commits -R newrelic/docs-website --committer=tzeitke
+
+## Search PRs for specific user, specific repo, specific date
+
+gh search commits -R newrelic/docs-website --author-name --author-date=">=2023-10-01"
+
+## Search commits for specific user, specific date
+
+gh search commits --committer=tabathadelane --committer-date ">=2024-04-01" gh search commits --committer=LizBaker --committer-date ">=2023-10-01" gh search commits --committer=sunnyzanchi --committer-date ">=2023-10-01" gh search commits --committer=clarkmcadoo --committer-date ">=2023-10-01"
+
+## Search PRs for specific user commenting on PR, specific date
+
+gh search prs --created ">=2024-04-01" --commenter tabathadelane gh search prs --created ">=2023-10-01" --commenter LizBaker gh search prs --created ">=2023-10-01" --commenter sunnyzanchi gh search prs --created ">=2023-10-01" --commenter clarkmcadoo
+
+## Search PRS created by specific user, specific date
+
+gh search prs --created ">=2024-04-01" --author tabathadelane
