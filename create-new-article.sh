@@ -50,6 +50,17 @@ if [ ! -d "$output_dir" ]; then
     mkdir "$output_dir"
 fi
 
-cp "$selected_template" "$output_dir/$(basename "$selected_template")"
+# Prompt user for the output file name
+echo -n "Enter the name of the output file (without extension): "
+read output_file_name
 
-echo "Files created successfully in the '$output_dir' directory."
+# Validate the output file name
+if [ -z "$output_file_name" ]; then
+    echo "Error: Output file name cannot be empty."
+    exit 1
+fi
+
+# Copy the selected template to the output directory with the specified file name
+cp "$selected_template" "$output_dir/$output_file_name".mdx
+
+echo "Template has been copied to '$output_dir/$output_file_name'."
