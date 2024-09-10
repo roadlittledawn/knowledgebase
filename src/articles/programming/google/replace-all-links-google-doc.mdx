@@ -1,0 +1,72 @@
+---
+title: Title here
+languages:
+  - lang
+topics:
+  - something
+skillLevel: 3
+needsHelp: false
+---
+
+You can create a Google App Script to run on a Google Doc to replace all links with a specific URL.
+
+1. In the Google Doc, go to `Extensions` > `Apps Script`.
+
+2. Add the following code:
+
+```javascript
+function replaceLinks() {
+  const doc = DocumentApp.getActiveDocument();
+  const body = doc.getBody();
+
+  // Regular expression to match the archive links with any DATE_STAMP (series of numbers)
+  const searchDomainPattern =
+    /https:\/\/web\.archive\.org\/web\/\d+\/https:\/\//;
+  const replaceDomain = "https://";
+
+  // Loop through all elements in the body
+  var paragraphs = body.getParagraphs();
+
+  paragraphs.forEach(function (paragraph) {
+    // Loop through all child elements in the paragraph
+    for (var i = 0; i < paragraph.getNumChildren(); i++) {
+      var child = paragraph.getChild(i);
+
+      // Ensure the child is a text element
+      if (child.getType() == DocumentApp.ElementType.TEXT) {
+        var text = child.asText();
+        var textContent = text.getText();
+
+        // Loop through the attribute indices to check for link attributes
+        var attrs = text.getTextAttributeIndices();
+
+        attrs.forEach(function (startIndex) {
+          var linkUrl = text.getLinkUrl(startIndex);
+
+          // If a link URL exists and matches the archive pattern, replace it
+          if (linkUrl && searchDomainPattern.test(linkUrl)) {
+            // Replace the archive link with the new domain
+            var newUrl = linkUrl.replace(searchDomainPattern, replaceDomain);
+
+            // Find the end of the link range by looking for the next index
+            var endIndex =
+              attrs.length > 1
+                ? attrs[attrs.indexOf(startIndex) + 1] - 1
+                : textContent.length;
+
+            // Set the new URL for the exact range of the hyperlink
+            text.setLinkUrl(startIndex, endIndex, newUrl);
+          }
+        });
+      }
+    }
+  });
+
+  // Alert after completion
+  DocumentApp.getUi().alert("All matching links have been updated.");
+}
+```
+
+3. Save the script and run the `replaceLinks` function. This will replace all links in the Google Doc that match the archive pattern with the new domain.
+
+This script can be modified to match different link patterns and replacement URLs as needed.
