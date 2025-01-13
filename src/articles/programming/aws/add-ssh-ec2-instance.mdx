@@ -1,0 +1,79 @@
+---
+title: How to Configure HTTPS for Anything LLM AWS private deployment
+languages:
+  - lang
+topics:
+  - something
+skillLevel: 3
+needsHelp: false
+---
+
+Following this & chatGPT to add SSH to your EC2 instance.
+
+- https://github.com/roadlittledawn/anything-llm/blob/master/cloud-deployments/aws/cloudformation/aws_https_instructions.md
+- https://chatgpt.com/c/67840227-bf44-8013-9dfe-e8c5d8914972
+
+Getting Session Manager running and adding VPC endpoints was a whole thing
+
+Step 9 Encountered error when running this command:
+
+```bash
+sudo certbot --nginx -d ai.clangclangclang.com
+/opt/certbot/lib64/python3.7/site-packages/OpenSSL/SSL.py:15: CryptographyDeprecationWarning: Python 3.7 is no longer supported by the Python core team and support for it is deprecated in cryptography. A future release of cryptography will remove support for Python 3.7.
+  from cryptography import x509
+Traceback (most recent call last):
+  File "/bin/certbot", line 5, in <module>
+    from certbot.main import main
+  File "/opt/certbot/lib64/python3.7/site-packages/certbot/main.py", line 6, in <module>
+    from certbot._internal import main as internal_main
+  File "/opt/certbot/lib64/python3.7/site-packages/certbot/_internal/main.py", line 24, in <module>
+    from acme import client as acme_client
+  File "/opt/certbot/lib64/python3.7/site-packages/acme/client.py", line 21, in <module>
+    import requests
+  File "/opt/certbot/lib64/python3.7/site-packages/requests/__init__.py", line 43, in <module>
+    import urllib3
+  File "/opt/certbot/lib64/python3.7/site-packages/urllib3/__init__.py", line 42, in <module>
+    "urllib3 v2.0 only supports OpenSSL 1.1.1+, currently "
+ImportError: urllib3 v2.0 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'OpenSSL 1.0.2k-fips  26 Jan 2017'. See: https://github.com/urllib3/urllib3/issues/2168
+```
+
+can try to downgrade the urllib3 version to 1.26.1
+
+```bash
+h-4.2$ sudo pip3 uninstall urllib3
+WARNING: Skipping urllib3 as it is not installed.
+sh-4.2$ yum list installed | grep urllib3
+python-urllib3.noarch                 1.25.9-1.amzn2.0.4             @amzn2-core
+sh-4.2$
+sh-4.2$ sudo /opt/certbot/bin/pip3 uninstall urllib3
+Found existing installation: urllib3 2.0.7
+Uninstalling urllib3-2.0.7:
+  Would remove:
+    /opt/certbot/lib/python3.7/site-packages/urllib3-2.0.7.dist-info/*
+    /opt/certbot/lib/python3.7/site-packages/urllib3/*
+Proceed (Y/n)? y
+  Successfully uninstalled urllib3-2.0.7
+sh-4.2$ sudo /opt/certbot/bin/pip3 install "urllib3==1.26.1"
+Collecting urllib3==1.26.1
+  Downloading urllib3-1.26.1-py2.py3-none-any.whl.metadata (42 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.8/42.8 kB 2.5 MB/s eta 0:00:00
+Downloading urllib3-1.26.1-py2.py3-none-any.whl (136 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 136.7/136.7 kB 5.8 MB/s eta 0:00:00
+Installing collected packages: urllib3
+Successfully installed urllib3-1.26.1
+```
+
+that worked, but was not able to install cert. outpuot:
+
+```bash
+deploying certificate
+Could not install certificate
+
+NEXT STEPS:
+- The certificate was saved, but could not be installed (installer: nginx). After fixing the error shown below, try installing it again by running:
+  certbot install --cert-name ai.clangclangclang.com
+- The certificate will need to be renewed before it expires. Certbot can automatically renew the certificate in the background, but you may need to take steps to enable that functionality. See https://certbot.org/renewal-setup for instructions.
+
+Could not automatically find a matching server block for ai.clangclangclang.com. Set the `server_name` directive to use the Nginx installer.
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+```
