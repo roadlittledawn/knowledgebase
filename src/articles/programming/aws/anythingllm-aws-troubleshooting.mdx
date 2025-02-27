@@ -1,0 +1,64 @@
+---
+---
+
+# SSH into EC2 instance using EC2 Instance Connect
+
+Create the endpoint if not created already.
+
+Choose Connect
+
+# 502 Bad Gateways error
+
+I thought I had changed some networking setting or something that borked it. Somehow AnythingLLM stopped running. I had to restart the app. That had to be done via docker.
+
+## 1. Check if Docker is Installed and Running
+
+Check Docker version:
+
+```
+docker -v
+```
+
+You should get something like `Docker version 20.10.17, build ....`
+
+Check if the Docker daemon is active:
+
+```
+sudo systemctl status docker
+```
+
+You should see `active (running).` If it’s not, start it:
+
+```
+sudo systemctl start docker
+```
+
+## 2. Look for Containers
+
+List running containers:
+
+```
+docker ps
+```
+
+If you see a container named something like `anythingllm` (or similar) and it’s Up, it’s running. If it’s not listed, it might be stopped. Check all containers with:
+
+```
+sudo docker ps -a
+```
+
+(this shows containers that are stopped as well).
+
+If you see a container for `anythingllm` but it’s exited, you can try to start it:
+
+```
+sudo docker start CONTAINER_NAME_OR_ID
+```
+
+Run `docker ps` again to see if it’s running.. It will show this in `Status` when starting:
+
+```
+Up 22 seconds (health: starting)
+```
+
+After about 30 seconds, it should show up as `Up About a minute (healthy)`
