@@ -1,49 +1,60 @@
 ---
 ---
 
-# SSH into EC2 instance using EC2 Instance Connect
+# Troubleshooting AnythingLLM on AWS EC2
 
-Create the endpoint if not created already.
+AnythingLLM deployed on AWS EC2 runs with Docker. If the app stops running, you need to restart it using Docker. To do that, you need to be able to SSH into the instance or connect using EC2 Instance Connect.
 
-Choose Connect
+My deployment did not specify an SSH key pair to use when creating the instance via CloudFormation, so I cannot SSH manually into the instance.
 
-# 502 Bad Gateways error
+## SSH into EC2 Instance Using EC2 Instance Connect
 
-I thought I had changed some networking setting or something that borked it. Somehow AnythingLLM stopped running. I had to restart the app. That had to be done via docker.
+1. Create the endpoint if not created already.
+2. Choose Connect.
 
-## 1. Check if Docker is Installed and Running
+## 502 Bad Gateway Error
 
-Check Docker version:
+If you encounter a 502 Bad Gateway error, it might be due to AnythingLLM stopping unexpectedly. Follow these steps to troubleshoot and restart the app using Docker.
 
-```
+### 1. Check if Docker is Installed and Running
+
+First, ensure Docker is installed and running on your EC2 instance.
+
+#### Check Docker Version
+
+Run the following command to check the Docker version:
+
+```sh
 docker -v
 ```
 
 You should get something like `Docker version 20.10.17, build ....`
 
+#### Check Docker Daemon Status
+
 Check if the Docker daemon is active:
 
-```
+```sh
 sudo systemctl status docker
 ```
 
 You should see `active (running).` If it’s not, start it:
 
-```
+```sh
 sudo systemctl start docker
 ```
 
-## 2. Look for Containers
+### 2. Look for Containers
 
 List running containers:
 
-```
+```sh
 docker ps
 ```
 
 If you see a container named something like `anythingllm` (or similar) and it’s Up, it’s running. If it’s not listed, it might be stopped. Check all containers with:
 
-```
+```sh
 sudo docker ps -a
 ```
 
@@ -51,13 +62,13 @@ sudo docker ps -a
 
 If you see a container for `anythingllm` but it’s exited, you can try to start it:
 
-```
+```sh
 sudo docker start CONTAINER_NAME_OR_ID
 ```
 
-Run `docker ps` again to see if it’s running.. It will show this in `Status` when starting:
+Run `docker ps` again to see if it’s running. It will show this in `Status` when starting:
 
-```
+```sh
 Up 22 seconds (health: starting)
 ```
 
