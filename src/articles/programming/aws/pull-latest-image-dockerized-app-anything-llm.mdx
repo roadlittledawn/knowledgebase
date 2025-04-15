@@ -1,0 +1,64 @@
+---
+title: Title here
+languages:
+  - lang
+topics:
+  - something
+skillLevel: 3
+needsHelp: false
+---
+
+
+## Resources
+
+### Instructions from Cedric
+
+Thank you for providing the CloudFormation template details. Based on this information, I'll update my guidance for pulling and running the latest Docker image for AnythingLLM:
+
+1. First, stop and remove the existing container:
+
+```bash
+docker stop $(docker ps -q --filter ancestor=mintplexlabs/anythingllm)
+docker rm $(docker ps -aq --filter ancestor=mintplexlabs/anythingllm)
+```
+
+2. Pull the latest image:
+
+```bash
+docker pull mintplexlabs/anythingllm:latest
+```
+
+3. Run the new container with the latest image, using the same configuration as in your CloudFormation template:
+
+```bash
+docker run -d \
+  -p 3001:3001 \
+  --cap-add SYS_ADMIN \
+  -v /home/********/anythingllm:/app/server/storage \
+  -v /home/********/anythingllm/.env:/app/server/.env \
+  -e STORAGE_DIR="/app/server/storage" \
+  mintplexlabs/anythingllm:latest
+```
+
+4. Verify that the new container is running:
+
+```bash
+docker ps
+```
+
+5. Check the health of the application:
+
+```bash
+curl -Is http://localhost:3001/api/ping | head -n 1 | cut -d$' ' -f2
+```
+
+Important notes based on your setup:
+
+- The application data is stored in `/home/********/anythingllm`. This directory is mounted as a volume in the container, so your data will persist even when updating the container.
+- The `.env` file is located at `/home/********/anythingllm/.env`. This file is also mounted in the container, so your environment variables are preserved.
+- The container is run with the `SYS_ADMIN` capability, which gives it additional privileges.
+- The application is exposed on port 3001.
+
+Remember, if you need to make any changes to the environment variables, you should edit the `/home/********/anythingllm/.env` file before running the new container.
+
+After running these commands, you should have the latest version of AnythingLLM running on your EC2 instance with the same configuration as specified in your CloudFormation template.
