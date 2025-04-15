@@ -1,0 +1,15 @@
+{
+  "name": "knowledgebase",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Knowledgebase",
+  "author": "Clinton",
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "article:new": "./create-new-article.sh"
+  }
+}
