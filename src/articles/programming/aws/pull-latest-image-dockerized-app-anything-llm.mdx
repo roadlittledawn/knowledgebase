@@ -18,7 +18,11 @@ Thank you for providing the CloudFormation template details. Based on this infor
 1. First, stop and remove the existing container:
 
 ```bash
-docker stop $(docker ps -q --filter ancestor=mintplexlabs/anythingllm)
+# Get container ID and store it in a variable
+CONTAINER_ID=$(docker ps -q --filter ancestor=mintplexlabs/anythingllm)
+# Stop the container using the variable
+docker stop $CONTAINER_ID
+# Remove the container
 docker rm $(docker ps -aq --filter ancestor=mintplexlabs/anythingllm)
 ```
 
@@ -34,8 +38,8 @@ docker pull mintplexlabs/anythingllm:latest
 docker run -d \
   -p 3001:3001 \
   --cap-add SYS_ADMIN \
-  -v /home/********/anythingllm:/app/server/storage \
-  -v /home/********/anythingllm/.env:/app/server/.env \
+  -v /home/ec2-user/anythingllm:/app/server/storage \
+  -v /home/ec2-user/anythingllm/.env:/app/server/.env \
   -e STORAGE_DIR="/app/server/storage" \
   mintplexlabs/anythingllm:latest
 ```
