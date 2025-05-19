@@ -12,6 +12,8 @@ needsHelp: false
 
 Using the `gh` CLI tool, you can search the git history of a repository for contributor data. This can be useful for reporting purposes, or to get a sense of who has been contributing to a project.
 
+# Using `gh` github CLI
+
 ## Search PRs reviewed by specific user
 
 ```bash
@@ -58,4 +60,12 @@ gh search prs --created ">=2024-04-01" --author roadlittledawn
 
 ```bash
 gh search prs -R newrelic/docs-website --label "from_external"
+```
+
+# Using `git` CLI commands
+
+Count unique contributors in a git repository:
+
+```bash
+git log --since="1 year ago" --format="%an" | sort | uniq | wc -l
 ```
