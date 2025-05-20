@@ -58,11 +58,11 @@ curl -Is http://localhost:3001/api/ping | head -n 1 | cut -d$' ' -f2
 
 Important notes based on your setup:
 
-- The application data is stored in `/home/********/anythingllm`. This directory is mounted as a volume in the container, so your data will persist even when updating the container.
-- The `.env` file is located at `/home/********/anythingllm/.env`. This file is also mounted in the container, so your environment variables are preserved.
+- The application data is stored in `/home/ec2-user/anythingllm`. This directory is mounted as a volume in the container, so your data will persist even when updating the container.
+- The `.env` file is located at `/home/ec2-useranythingllm/.env`. This file is also mounted in the container, so your environment variables are preserved.
 - The container is run with the `SYS_ADMIN` capability, which gives it additional privileges.
 - The application is exposed on port 3001.
 
-Remember, if you need to make any changes to the environment variables, you should edit the `/home/********/anythingllm/.env` file before running the new container.
+Remember, if you need to make any changes to the environment variables, you should edit the `/home/ec2-user/anythingllm/.env` file before running the new container.
 
 After running these commands, you should have the latest version of AnythingLLM running on your EC2 instance with the same configuration as specified in your CloudFormation template.
