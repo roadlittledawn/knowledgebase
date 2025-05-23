@@ -5,11 +5,6 @@
   "description": "Knowledgebase",
   "author": "Clinton",
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
     "article:new": "./create-new-article.sh"
   }
 }
