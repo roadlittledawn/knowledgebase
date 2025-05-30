@@ -1,0 +1,147 @@
+---
+title: Understanding MCP (Model Context Protocol) Client/Server Architecture
+topics:
+  - AI
+  - MCP
+  - Protocol
+  - Architecture
+---
+
+# Understanding MCP (Model Context Protocol) Client/Server Architecture
+
+The Model Context Protocol (MCP) is an open standard that enables AI applications to securely connect with external data sources and tools. It provides a standardized way for AI systems to access and interact with various resources while maintaining security and control.
+
+## What is MCP?
+
+MCP is a protocol designed to solve the challenge of connecting Large Language Models (LLMs) with external tools and data sources. Instead of each AI application implementing custom integrations for every tool or service, MCP provides a unified interface that both AI applications (clients) and external services (servers) can implement.
+
+## Core Architecture
+
+### Client-Server Model
+
+MCP follows a traditional client-server architecture where:
+
+- **MCP Clients**: AI applications, chat interfaces, or other tools that need to access external resources
+- **MCP Servers**: Services that expose tools, resources, or data through the MCP protocol
+
+### Key Components
+
+1. **Transport Layer**: Handles the communication between client and server (typically over stdio, HTTP, or WebSocket)
+2. **Protocol Layer**: Defines the message format and communication patterns using JSON-RPC 2.0
+3. **Capability Layer**: Specifies what tools and resources are available
+
+## How MCP Works
+
+### 1. Connection Establishment
+
+The client initiates a connection to the MCP server and performs a capability negotiation to understand what tools and resources are available.
+
+### 2. Resource Discovery
+
+The server exposes its available:
+- **Tools**: Functions that can be called to perform actions
+- **Resources**: Data sources that can be read or queried
+- **Prompts**: Pre-defined prompt templates
+
+### 3. Request/Response Cycle
+
+The client can then:
+- Call tools with specific parameters
+- Request resources with filtering criteria
+- Use prompt templates for consistent interactions
+
+### 4. Security and Sandboxing
+
+MCP includes built-in security features:
+- Capability-based access control
+- Request validation
+- Sandboxed execution environments
+
+## Benefits of MCP
+
+### For Developers
+- **Standardization**: One protocol to learn instead of multiple custom APIs
+- **Reusability**: MCP servers can be used by multiple AI applications
+- **Security**: Built-in security and permission models
+
+### For Users
+- **Consistency**: Uniform experience across different AI applications
+- **Extensibility**: Easy to add new tools and data sources
+- **Control**: Fine-grained control over what AI can access
+
+## Real-World Use Cases
+
+1. **File System Access**: AI applications reading and writing files
+2. **Database Queries**: Secure database access for AI-powered analytics
+3. **API Integrations**: Connecting AI to external services and APIs
+4. **Development Tools**: AI-assisted coding with access to development environments
+
+## Implementation Example
+
+Here's a simplified flow of how an MCP interaction works:
+
+```
+1. Client connects to MCP Server
+2. Server announces available tools: [read_file, write_file, execute_command]
+3. Client requests: "Please read the config file"
+4. Server executes read_file tool and returns content
+5. Client processes the response and continues conversation
+```
+
+## Message Flow
+
+```json
+// Client requests available tools
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/list"
+}
+
+// Server responds with available tools
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "tools": [
+      {
+        "name": "read_file",
+        "description": "Read contents of a file",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "path": {"type": "string"}
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+## Authoritative Resources
+
+- **Official MCP Specification**: [https://spec.modelcontextprotocol.io/](https://spec.modelcontextprotocol.io/)
+- **MCP GitHub Repository**: [https://github.com/modelcontextprotocol](https://github.com/modelcontextprotocol)
+- **Anthropic's MCP Documentation**: [https://docs.anthropic.com/en/docs/build-with-claude/tool-use](https://docs.anthropic.com/en/docs/build-with-claude/tool-use)
+- **MCP Server Examples**: [https://github.com/modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers)
+- **MCP TypeScript SDK**: [https://github.com/modelcontextprotocol/typescript-sdk](https://github.com/modelcontextprotocol/typescript-sdk)
+- **MCP Python SDK**: [https://github.com/modelcontextprotocol/python-sdk](https://github.com/modelcontextprotocol/python-sdk)
+
+## Getting Started
+
+To start building with MCP:
+
+1. **Choose your role**: Decide if you're building a client (AI application) or server (tool provider)
+2. **Select an SDK**: Use the official TypeScript or Python SDKs
+3. **Define your interface**: Specify what tools or resources you'll expose/consume
+4. **Implement the protocol**: Handle connection, capability negotiation, and message exchange
+5. **Test thoroughly**: Ensure proper error handling and security measures
+
+## Interactive Demo
+
+Someone I work with built an interactive demo of MCP that allows you to explore its capabilities in a web-based environment. You can try it out here: [MCP Interactive Demo](../../../../static/html/mcp.html).
+
+## Conclusion
+
+MCP represents a significant step forward in standardizing how AI applications interact with external tools and data sources. By providing a unified protocol, it enables better security, reusability, and developer experience in the rapidly evolving AI ecosystem.

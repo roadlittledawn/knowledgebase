@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>MCP – step‑wise demo</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: #f0f4f8;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 0.5rem;
+      overflow-x: hidden;
+    }
+
+    /* =====================  topology ========================== */
+
+    #main-container {
+      display: flex;
+      width: 100%;
+      max-width: 95%; /* Increase from 80rem to percentage-based */
+      gap: 1rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .left-column, .right-column {
+      width: 30%;
+    }
+
+    .middle-column {
+      width: 40%;
+    }
+
+    .actor-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .actor {
+      border: 2px solid;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      text-align: center;
+      width: 100%;
+      max-width: 280px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .client { border-color: #3b82f6; background: #eff6ff; }
+
+    .server { border-color: #10b981; background: #f0fdf4; }
+
+    .pipe-area {
+      position: relative;
+      height: 100px;
+      width: 100%;
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pipe {
+      position: absolute;
+      background: #9ca3af; /* gray‑400 */
+      height: 3px;
+      left: 0;
+      right: 0;
+    }
+
+    .pipe-c { 
+      width: 100%;
+      top: 30px; 
+    }
+
+    .pipe-s { 
+      width: 100%;
+      top: 30px; 
+    }
+
+    .pipe-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+    }
+
+    .pipe-c .arrow-right {
+      border-left: 8px solid #9ca3af;
+      right: 0;
+      top: -4.5px;
+    }
+
+    .pipe-s .arrow-left {
+      border-right: 8px solid #9ca3af;
+      left: 0;
+      top: -4.5px;
+    }
+
+    /* ================  flying message  ======================== */
+
+    .message {
+
+      position: absolute;
+
+      padding: 0.5rem 0.75rem;
+
+      border-radius: 0.5rem;
+
+      font-size: 0.7rem;
+
+      font-family: Consolas, monospace;
+
+      white-space: pre;
+
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      z-index: 10;
+
+      max-width: 360px;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+      transition: left 1s ease, opacity 0.4s ease;
+
+    }
+
+    .from-client { background: #60a5fa; color: #fff; border: 1px solid #3b82f6; }
+
+    .from-server { background: #34d399; color: #fff; border: 1px solid #10b981; }
+
+    /* ================  logs ================= */
+
+    .message-log-container {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      min-height: 400px;
+      max-height: none;
+      overflow-y: auto;
+      width: 100%;
+      margin-top: 1rem;
+      flex-grow: 1;
+    }
+
+    .persistent-message-item {
+
+      padding: 0.4rem 0.6rem;
+
+      margin-bottom: 0.4rem;
+
+      border-radius: 0.375rem;
+
+      font-size: 0.65rem;
+
+      font-family: Consolas, monospace;
+
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+      white-space: pre-wrap;
+
+    }
+
+    .c-log { background: #dbeafe; color: #1e3a8a; border-left: 4px solid #3b82f6; }
+
+    .s-log { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+
+    /* ================  chat window  ================= */
+
+    #chat-window {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      width: 100%;
+      min-height: 520px;
+      height: 100%;
+      padding: 1rem;
+      margin-top: 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      overflow-y: auto;
+    }
+
+    .chat-message {
+
+      max-width: 75%;
+
+      padding: 0.5rem 0.75rem;
+
+      margin-bottom: 0.5rem;
+
+      border-radius: 0.5rem;
+
+      font-size: 0.85rem;
+
+      line-height: 1.25rem;
+
+      white-space: pre-line;
+
+    }
+
+    .role-system    { background: #f3f4f6; color: #111827; align-self: flex-start; }
+
+    .role-user      { background: #fee2e2; color: #991b1b; align-self: flex-end; }
+
+    .role-assistant { background: #fef9c3; color: #854d0e; align-self: flex-start; }
+
+    .role-tool-use  { background: #fef9c3; color: #854d0e; font-family: Consolas, monospace; align-self: flex-start; }
+    
+    .role-tool-result { background: #fee2e2; color: #991b1b; font-family: Consolas, monospace; align-self: flex-end; }
+
+    .controls button {
+
+      background: #4f46e5;
+
+      color: #fff;
+
+      padding: 0.75rem 1.5rem;
+
+      border-radius: 0.5rem;
+
+      font-weight: 500;
+
+      transition: background 0.2s;
+
+      margin: 0 0.5rem;
+
+    }
+
+    .controls button:hover:not(:disabled) { background: #4338ca; }
+
+    .controls button:disabled { background: #a5b4fc; cursor: not-allowed; }
+
+    .status-log {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #ffffff;
+      border-radius: 0.5rem;
+      width: 100%;
+      max-width: 95%;
+      min-height: 140px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      font-size: 0.9rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .status-log p { margin-bottom: 0.3rem; }
+    
+    /* ------------- json formatting ----------------- */
+    .json-formatter {
+      font-family: 'Consolas', 'Monaco', monospace;
+      background: #f8fafc;
+      border-radius: 4px;
+      padding: 8px;
+      overflow-x: auto;
+      margin: 4px 0;
+      border: 1px solid #e2e8f0;
+      position: relative;
+    }
+    
+    .json-formatter pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    
+    .json-key {
+      color: #2563eb;
+      font-weight: 600;
+    }
+    
+    .json-string {
+      color: #16a34a;
+    }
+    
+    .json-number {
+      color: #9333ea;
+    }
+    
+    .json-boolean {
+      color: #c026d3;
+      font-weight: 600;
+    }
+    
+    .json-null {
+      color: #64748b;
+      font-style: italic;
+    }
+    
+    .json-mark {
+      color: #64748b;
+    }
+    
+    /* ------------- copy button ----------------- */
+    .copy-button {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: #e2e8f0;
+      color: #475569;
+      border: none;
+      border-radius: 3px;
+      padding: 6px 10px;
+      font-size: 9px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      z-index: 20;
+      line-height: 1;
+      min-height: 0;
+      max-height: 22px;
+      max-width: 70px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background: #cbd5e1;
+    }
+    
+    .copy-button.copied {
+      background: #10b981;
+      color: white;
+      opacity: 1;
+    }
+    
+    .clipboard-icon {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      min-width: 8px;
+    }
+    
+    /* ------------- legend ----------------- */
+    .legend-container {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      width: 100%;
+      max-width: 100%;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 0 1.5rem;
+    }
+    
+    .color-swatch {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 0.25rem;
+      margin-right: 0.5rem;
+    }
+    
+    .legend-label {
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="text-center mb-8 max-w-6xl">
+    <h1 class="text-3xl font-bold text-slate-700">MCP step‑wise flow – JSON‑RPC 2.0</h1>
+    <p class="text-slate-600 mt-2">Click <strong>Next Step</strong> to move messages one hop at a time. Underneath you can
+      see how the same data is embedded into the LLM prompt.</p>
+      
+    <!-- ------------- controls (moved to top) ----------------- -->
+    <div class="controls mt-4 mb-2">
+      <button id="nextBtn">Next Step</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <!-- ------------- main container with 3-column layout ----------------- -->
+
+  <div id="main-container">
+    <!-- Left column: Client side -->
+    <div class="column left-column">
+      <div class="actor-container">
+        <div id="client" class="actor client">
+          <h2 class="font-semibold text-lg text-blue-700">MCP Client</h2>
+          <div class="text-xs text-blue-600">LLM Host (Process A)</div>
+        </div>
+      </div>
+      
+      <div class="pipe-area">
+        <div class="pipe pipe-c" id="pipe-c">
+          <div class="pipe-arrow arrow-right"></div>
+          <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-xs text-gray-600">Client STDOUT → Server STDIN</span>
+        </div>
+      </div>
+      
+      <div id="client-log" class="message-log-container">
+        <h4 class="font-semibold text-sm text-center mb-2 text-blue-700">Client STDIN (from Server)</h4>
+      </div>
+    </div>
+
+    <!-- Middle column: Chat window -->
+    <div class="column middle-column">
+      <!-- Legend -->
+      <div class="legend-container">
+        <div class="legend-item">
+          <div class="color-swatch" style="background: #f3f4f6;"></div>
+          <span class="legend-label">System Prompt</span>
+        </div>
+        <div class="legend-item">
+          <div class="color-swatch" style="background: #fee2e2;"></div>
+          <span class="legend-label">User Prompt & Tool Results</span>
+        </div>
+        <div class="legend-item">
+          <div class="color-swatch" style="background: #fef9c3;"></div>
+          <span class="legend-label">LLM Response & Tool Use</span>
+        </div>
+      </div>
+      
+      <!-- Chat window moved to middle column -->
+      <div id="chat-window" class="flex flex-col"></div>
+    </div>
+
+    <!-- Right column: Server side -->
+    <div class="column right-column">
+      <div class="actor-container">
+        <div id="server" class="actor server">
+          <h2 class="font-semibold text-lg text-emerald-700">MCP Server</h2>
+          <div class="text-xs text-emerald-600">Tool Provider (Process B)</div>
+        </div>
+      </div>
+      
+      <div class="pipe-area">
+        <div class="pipe pipe-s" id="pipe-s">
+          <div class="pipe-arrow arrow-left"></div>
+          <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-xs text-gray-600">Server STDOUT → Client STDIN</span>
+        </div>
+      </div>
+      
+      <div id="server-log" class="message-log-container">
+        <h4 class="font-semibold text-sm text-center mb-2 text-emerald-700">Server STDIN (from Client)</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- ------------- status log ----------------- -->
+
+  <div id="status" class="status-log">
+
+    <p class="text-gray-500">Ready. Click “Next Step”.</p>
+
+  </div>
+
+  <script>
+
+    /* ========== handy shorthands ========== */
+
+    const $ = (id) => document.getElementById(id);
+
+    const clientEl = $('client');
+
+    const serverEl = $('server');
+
+    const paneEl   = $('main-container');
+
+    const pipeC    = $('pipe-c');
+
+    const pipeS    = $('pipe-s');
+
+    const clientLog= $('client-log');
+
+    const serverLog= $('server-log');
+
+    const chatWin  = $('chat-window');
+
+    const statusEl = $('status');
+
+    const nextBtn  = $('nextBtn');
+
+    const resetBtn = $('resetBtn');
+
+    const pretty = (obj) => JSON.stringify(obj, null, 2);
+
+    // Function to create mcurl command from JSON payload
+    function createMcurlCommand(jsonObj) {
+      const jsonString = JSON.stringify(jsonObj, null, 2);
+      return `curl -s "$@" -L --cookie ~/.midway/cookie --cookie-jar ~/.midway/cookie -X POST https://mcp.storegen.amazon.dev/tickety \\
+  -H "Content-Type: application/json" \\
+  -d '${jsonString}' | jq`;
+    }
+    
+    // Function to copy text to clipboard
+    function copyToClipboard(text, btn) {
+      // Copy text to clipboard
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          // Show success feedback with tooltip
+          const tooltip = document.createElement('div');
+          tooltip.textContent = 'Copied!';
+          tooltip.style.position = 'absolute';
+          tooltip.style.backgroundColor = '#10b981';
+          tooltip.style.color = 'white';
+          tooltip.style.padding = '2px 6px';
+          tooltip.style.borderRadius = '3px';
+          tooltip.style.fontSize = '9px';
+          tooltip.style.top = '-20px';
+          tooltip.style.left = '50%';
+          tooltip.style.transform = 'translateX(-50%)';
+          tooltip.style.whiteSpace = 'nowrap';
+          tooltip.style.zIndex = '100';
+          
+          // Add tooltip to button
+          btn.classList.add('copied');
+          btn.appendChild(tooltip);
+          
+          // Reset after a delay
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.removeChild(tooltip);
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Failed to copy:', err);
+          alert('Failed to copy to clipboard');
+        });
+    }
+    
+    // Helper function to check if a message should have the mcurl copy button
+    function shouldShowCopyButton(json, from) {
+      // Only show button for client messages (displayed in server log)
+      if (from !== 'client') return false;
+      
+      // Check if this is one of the specific payloads
+      if (json && json.method) {
+        if (['initialize', 'notifications/initialized', 'tools/list'].includes(json.method)) {
+          return true;
+        }
+        // Add this condition to detect the weather tool call
+        if (json.method === 'tools/call' && 
+            json.params && 
+            json.params.tool === 'weather.getCurrentWeather') {
+          return true;
+        }
+      }
+      
+      return false;
+    }
+
+    // Function to create the special tickety curl command
+    function createTicketyCommand() {
+      return `curl -s "$@" -L --cookie ~/.midway/cookie --cookie-jar ~/.midway/cookie -X POST https://mcp.storegen.amazon.dev/tickety \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "read_ticket",
+    "params": {
+      "ticketId": "P242057378"
+    },
+    "id": 3
+  }' | jq`;
+    }
+
+    // Function to format JSON with syntax highlighting and copy button
+    function formatJson(jsonString, from = null, jsonObj = null) {
+      try {
+        // Parse the JSON to ensure it's valid
+        const json = jsonObj || JSON.parse(jsonString);
+        
+        // Format the JSON with proper indentation
+        const formatted = JSON.stringify(json, null, 2);
+        
+        // Create a unique ID for this formatter instance
+        const formatterId = 'json-formatter-' + Math.random().toString(36).substr(2, 9);
+        
+        // Add syntax highlighting
+        const highlighted = formatted
+          .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, match => {
+            let cls = 'json-number';
+            if (/^"/.test(match)) {
+              if (/:$/.test(match)) {
+                cls = 'json-key';
+                // Remove the colon from the key
+                match = match.replace(/:$/, '');
+              } else {
+                cls = 'json-string';
+              }
+            } else if (/true|false/.test(match)) {
+              cls = 'json-boolean';
+            } else if (/null/.test(match)) {
+              cls = 'json-null';
+            }
+            return `<span class="${cls}">${match}</span>`;
+          })
+          .replace(/[{}\[\]]/g, match => `<span class="json-mark">${match}</span>`);
+        
+        // Determine if we should show the copy button for this message
+        const showCopyButton = shouldShowCopyButton(json, from);
+        
+        // Create copy button with clipboard icon (only if it should be shown)
+        const copyButton = showCopyButton ? `
+          <button class="copy-button" onclick="copyJsonAsMcurl('${formatterId}')" title="Try with remote tickety MCP server!">
+            <svg class="clipboard-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            </svg>
+          </button>` : '';
+          
+        return `<div class="json-formatter" id="${formatterId}" data-json='${JSON.stringify(json)}'>${copyButton}<pre>${highlighted}</pre></div>`;
+      } catch (e) {
+        // If JSON is invalid, return the original string
+        console.error("Invalid JSON:", e);
+        return jsonString;
+      }
+    }
+    
+    // Global function to copy JSON as mcurl command
+    window.copyJsonAsMcurl = function(formatterId) {
+      const formatter = document.getElementById(formatterId);
+      if (formatter) {
+        try {
+          const jsonData = JSON.parse(formatter.getAttribute('data-json'));
+          
+          // Check if this is the weather tool call that needs the special command
+          let command;
+          if (jsonData.method === 'tools/call' && 
+              jsonData.params && 
+              jsonData.params.tool === 'weather.getCurrentWeather') {
+            command = createTicketyCommand();
+          } else {
+            command = createMcurlCommand(jsonData);
+          }
+          
+          // Find the button within this formatter
+          const btn = formatter.querySelector('.copy-button');
+          copyToClipboard(command, btn);
+        } catch (e) {
+          console.error('Error copying JSON as mcurl:', e);
+        }
+      }
+    };
+
+    // Function to detect JSON within <function> tags
+    function processSystemMessage(content) {
+      const functionTagRegex = /<function>([\s\S]*?)<\/function>/g;
+      
+      return content.replace(functionTagRegex, (match, jsonContent) => {
+        try {
+          return '<function>\n' + formatJson(jsonContent) + '\n</function>';
+        } catch (e) {
+          return match; // Return original if formatting fails
+        }
+      });
+    }
+
+    let msgCounter = 0;
+    let systemMessageEl = null; // Track the system message element
+
+    function logStatus(txt) {
+
+      const p = document.createElement('p');
+
+      p.textContent = '› ' + txt;
+
+      statusEl.appendChild(p);
+
+      statusEl.scrollTop = statusEl.scrollHeight;
+
+    }
+
+    function resetStatus() {
+
+      statusEl.innerHTML = '<p class="text-gray-500">Reset. Click “Next Step” to begin again.</p>';
+
+    }
+
+    function resetLogs() {
+
+      clientLog.innerHTML = '<h4 class="font-semibold text-sm text-center mb-2 text-blue-700">Client STDIN (from Server)</h4>';
+
+      serverLog.innerHTML = '<h4 class="font-semibold text-sm text-center mb-2 text-emerald-700">Server STDIN (from Client)</h4>';
+
+      chatWin.innerHTML  = '';
+      systemMessageEl = null; // Reset the system message element reference
+
+    }
+
+    /* --------- chat window helpers ---------- */
+
+    function addChat(role, content) {
+      if (role === 'system') {
+        // Check if content contains <function> tags with JSON
+        const processedContent = processSystemMessage(content);
+        
+        if (systemMessageEl) {
+          // If system message already exists, append to it
+          if (processedContent !== content) {
+            // If content was processed (contains JSON), use innerHTML
+            const currentContent = systemMessageEl.innerHTML;
+            systemMessageEl.innerHTML = currentContent + '\n\n' + processedContent;
+          } else {
+            // Otherwise use textContent for safety
+            systemMessageEl.textContent += '\n\n' + content;
+          }
+        } else {
+          // Create new system message
+          const div = document.createElement('div');
+          div.className = 'chat-message role-' + role;
+          
+          if (processedContent !== content) {
+            // If content was processed (contains JSON), use innerHTML
+            div.innerHTML = processedContent;
+          } else {
+            // Otherwise use textContent for safety
+            div.textContent = content;
+          }
+          
+          // Place system message at the bottom
+          chatWin.appendChild(div);
+          systemMessageEl = div; // Store reference to system message
+        }
+      } else {
+        // For non-system messages, insert at the beginning (before existing messages)
+        const div = document.createElement('div');
+        div.className = 'chat-message role-' + role;
+        
+        // Apply JSON formatting for tool-use and tool-result messages
+        if (role === 'tool-use' || role === 'tool-result') {
+          try {
+            const jsonObj = JSON.parse(content);
+            div.innerHTML = formatJson(content);
+          } catch (e) {
+            div.textContent = content;
+          }
+        } else {
+          div.textContent = content;
+        }
+        
+        if (chatWin.firstChild) {
+          // Insert at the beginning, pushing down other messages
+          chatWin.insertBefore(div, chatWin.firstChild);
+        } else {
+          // Empty chat window
+          chatWin.appendChild(div);
+        }
+      }
+    }
+
+    /* ----------- animated transport --------- */
+
+    function fly(from, obj) {
+      /* returns Promise resolved when animation ends */
+      return new Promise((resolve) => {
+        msgCounter++;
+        
+        // Format JSON for display
+        const prettyJSON = pretty(obj);
+        const formattedHTML = formatJson(prettyJSON, from, obj);
+        
+        const box = document.createElement('div');
+        box.id = 'msg-' + msgCounter;
+        box.className = 'message ' + (from === 'client' ? 'from-client' : 'from-server');
+        
+        // Use innerHTML for the formatted JSON
+        box.innerHTML = formattedHTML;
+        
+        // compute start / end coordinates
+        const paneRect = paneEl.getBoundingClientRect();
+        paneEl.appendChild(box);
+        
+        const boxW = box.offsetWidth;
+        const boxH = box.offsetHeight;
+        
+        let startX, endX, startY, targetLog;
+        
+        if (from === 'client') {
+          // From client to server - left to right
+          const c = clientEl.getBoundingClientRect();
+          const p = pipeC.getBoundingClientRect();
+          
+          // Start at the right edge of client column
+          startX = c.right - paneRect.left + 10;
+          
+          // End at the left edge of server column
+          endX = serverEl.getBoundingClientRect().left - paneRect.left - boxW - 10;
+          
+          startY = p.top - paneRect.top + p.height / 2 - boxH / 2;
+          targetLog = serverLog;
+        } else {
+          // From server to client - right to left
+          const s = serverEl.getBoundingClientRect();
+          const p = pipeS.getBoundingClientRect();
+          
+          // Start at the left edge of server column
+          startX = s.left - paneRect.left - boxW - 10;
+          
+          // End at the right edge of client column
+          endX = clientEl.getBoundingClientRect().right - paneRect.left + 10;
+          
+          startY = p.top - paneRect.top + p.height / 2 - boxH / 2;
+          targetLog = clientLog;
+        }
+        
+        box.style.top = startY + 'px';
+        box.style.left = startX + 'px';
+        box.style.opacity = '0';
+        
+        // animate in
+        setTimeout(() => {
+          box.style.opacity = '1';
+          box.style.left = endX + 'px';
+        }, 20);
+        
+        // when done…
+        setTimeout(() => {
+          const item = document.createElement('div');
+          item.className = 'persistent-message-item ' + (from==='client'?'c-log':'s-log');
+          
+          // Use innerHTML for the formatted JSON in the log
+          item.innerHTML = formattedHTML;
+          
+          // Insert after header (first child) instead of appending
+          if (targetLog.childNodes.length > 1) {
+            targetLog.insertBefore(item, targetLog.childNodes[1]);
+          } else {
+            targetLog.appendChild(item);
+          }
+          // No need to scroll to bottom as new items are at the top
+          
+          box.style.opacity = '0';
+          setTimeout(() => box.remove(), 400);
+          resolve();
+        }, 1000);
+      });
+    }
+
+    /* ------------- scenario data --------------- */
+
+    let rpcId = 0;
+
+    const steps = [];
+
+    function buildScenario() {
+
+      rpcId = 0;
+
+      steps.length = 0; // clear existing
+
+      // STEP 0 – initialize request
+
+      rpcId++;
+
+      const initReq = { jsonrpc: '2.0', id: rpcId, method: 'initialize',
+
+        params: { protocolVersion: '2024-11-05', capabilities: { tools: { listChanged: true } }, clientInfo: { name: 'DemoClient', version: '0.2' } } };
+
+      steps.push(async () => {
+
+        logStatus('Client → initialize (id '+rpcId+')');
+
+        await fly('client', initReq);
+
+        addChat('system', 'You are Claude, a helpful assistant.');
+
+      });
+
+      // STEP 1 – initialize result
+
+      const initRes = { jsonrpc:'2.0', id: rpcId, result: {
+
+        protocolVersion: '2024-11-05',
+
+        capabilities: { logging: {}, tools: { listChanged: true } },
+
+        serverInfo: { name:'DemoServer', version:'1.2' }
+
+      }};
+
+      steps.push(async () => {
+
+        logStatus('Server → initialize result');
+
+        await fly('server', initRes);
+
+      });
+
+      // STEP 2 – notifications/initialized note
+
+      const note = { jsonrpc:'2.0', method:'notifications/initialized', params:{} };
+
+      steps.push(async () => {
+
+        logStatus('Client → notifications/initialized');
+
+        await fly('client', note);
+
+      });
+
+      // STEP 3 – tools/list request
+
+      rpcId++;
+
+      const listReq = { jsonrpc:'2.0', id: rpcId, method:'tools/list', params:{} };
+
+      steps.push(async () => {
+
+        logStatus('Client → tools/list (id '+rpcId+')');
+
+        await fly('client', listReq);
+
+      });
+
+      // STEP 4 – tools/list result + update prompt with tool defs
+
+      const toolDef = {
+
+        name:'weather.getCurrentWeather',
+
+        description:'Get current weather.',
+
+        parameters:{ type:'object', properties:{ location:{type:'string'}, unit:{type:'string',enum:['celsius','fahrenheit'] } }, required:['location']}
+
+      };
+
+      const listRes = { jsonrpc:'2.0', id: rpcId, result:{ tools:[ toolDef ] } };
+
+      steps.push(async () => {
+
+        logStatus('Server → tools/list result');
+
+        await fly('server', listRes);
+
+        addChat('system', 'Tools available:\n<function>\n'+ JSON.stringify(toolDef) + '\n</function>');
+
+      });
+
+      // STEP 5 – user asks question
+
+      steps.push(async () => {
+
+        addChat('user', 'What\'s the weather in Berlin right now?');
+
+        logStatus('User question arrives → triggers assistant response');
+
+      });
+
+      // STEP 6 – assistant acknowledges and prepares to use tool
+
+      steps.push(async () => {
+
+        addChat('assistant', 'Okay, I\'ll look up the weather for you.');
+
+        logStatus('Assistant acknowledges request');
+
+      });
+
+      // STEP 7 – tools/call request
+
+      rpcId++;
+
+      const execReq = { jsonrpc:'2.0', id: rpcId, method:'tools/call', params:{ tool:'weather.getCurrentWeather', arguments:{ location:'Berlin', unit:'celsius' } } };
+
+      steps.push(async () => {
+
+        addChat('tool-use', JSON.stringify({
+          type: "tool_use",
+          id: "toolu_" + rpcId,
+          name: "weather.getCurrentWeather",
+          input: { location: "Berlin", unit: "celsius" }
+        }, null, 2));
+
+        logStatus('Client → tools/execute (id '+rpcId+')');
+
+        await fly('client', execReq);
+
+      });
+
+      // STEP 8 – tools/execute result
+
+      const execRes = { jsonrpc:'2.0', id: rpcId, result:{ location:'Berlin', temperature:18, unit:'celsius', condition:'Partly cloudy' } };
+
+      steps.push(async () => {
+
+        logStatus('Server → result (weather)');
+
+        await fly('server', execRes);
+
+        addChat('tool-result', JSON.stringify({
+          type: "tool_result",
+          tool_use_id: "toolu_" + rpcId,
+          content: execRes.result
+        }, null, 2));
+
+      });
+
+      // STEP 9 – assistant final answer
+
+      steps.push(async () => {
+
+        addChat('assistant', "It's 18 °C and partly cloudy in Berlin.");
+
+        logStatus('✔ Scenario completed');
+
+      });
+
+    }
+
+    /* ------------- control handlers --------------- */
+
+    let stepIndex = 0; let running = false;
+
+    async function playNext() {
+
+      if (running || stepIndex >= steps.length) return;
+
+      running = true;
+
+      nextBtn.disabled = true;
+
+      await steps[stepIndex++]();
+
+      running = false;
+
+      nextBtn.disabled = (stepIndex >= steps.length);
+
+    }
+
+    function doReset() {
+
+      stepIndex = 0; msgCounter = 0; running = false;
+
+      resetLogs(); resetStatus();
+
+      buildScenario();
+
+      nextBtn.disabled = false;
+
+    }
+
+    nextBtn.addEventListener('click', playNext);
+
+    resetBtn.addEventListener('click', doReset);
+
+    /* kick‑off */
+
+    buildScenario();
+
+  </script>
+
+</body>
+
+</html>
